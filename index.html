@@ -4,532 +4,490 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RankForge | JEE Platform</title>
+<title>RankForge | Chemistry Grand Test</title>
 <style>
-:root {
-  --bg:#090d1a;
-  --panel:#131b2e;
-  --panel2:#1a2540;
-  --text:#f1f5ff;
-  --muted:#9ba9c4;
-  --accent:#7c8cff;
-  --green:#32d69a;
-  --border:#293653;
-}
 *{box-sizing:border-box}
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Inter,Arial,sans-serif;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b1020;
+  color:#f5f7ff;
 }
-button,input,select{font:inherit}
+header{
+  padding:20px;
+  background:#151d35;
+  border-bottom:1px solid #293653;
+  text-align:center;
+}
+header h1{margin:0;color:#70a5ff}
+header p{color:#aab7d1;margin:8px 0 0}
+.container{max-width:900px;margin:25px auto;padding:16px}
+.card{
+  background:#151d35;
+  border:1px solid #293653;
+  border-radius:14px;
+  padding:22px;
+  margin-bottom:18px;
+}
+h2{margin-top:0}
 button{
-  cursor:pointer;border:1px solid var(--border);
-  border-radius:9px;padding:11px 15px;
-  color:var(--text);background:var(--panel2);
+  background:#3978f6;
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:13px 20px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
 }
-button:hover{border-color:var(--accent)}
-button:disabled{opacity:.45;cursor:not-allowed}
-input,select{
-  width:100%;padding:12px;margin:7px 0 16px;
-  border:1px solid var(--border);border-radius:9px;
-  background:var(--bg);color:var(--text);
+button:disabled{background:#59647a;cursor:not-allowed}
+input[type="text"],input[type="number"]{
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid #465675;
+  background:#0b1020;
+  color:white;
+  font-size:16px;
 }
-label{display:block;color:var(--muted);font-size:13px}
-h1,h2,h3{margin-top:0}
-p{color:var(--muted);line-height:1.6}
-.topbar{
-  position:sticky;top:0;z-index:5;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;padding:16px 5%;
-  background:#0d1425;border-bottom:1px solid var(--border);
-}
-.brand{font-size:22px;font-weight:900;letter-spacing:1px}
-.brand span,.hero span{color:var(--accent)}
-nav{display:flex;gap:7px;flex-wrap:wrap}
-nav button{font-size:13px}
-main{max-width:1150px;margin:auto;padding:30px 20px}
-.page{display:none}
-.page.active{display:block}
-.hero{
-  padding:45px 30px;border:1px solid var(--border);
-  border-radius:18px;background:linear-gradient(120deg,#172345,#111a30);
-}
-.hero h1{font-size:clamp(30px,5vw,52px)}
-.eyebrow{color:var(--green);font-weight:800;letter-spacing:2px}
-.primary{
-  background:var(--accent);color:white;border:0;
-  font-weight:800;margin-top:10px;
-}
-.stats{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:14px;margin:22px 0;
-}
-.card,.panel{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:13px;padding:20px;margin:15px 0;
-}
-.card h2{color:var(--green);font-size:27px}
-.grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
-}
-.grid button{padding:22px;font-weight:800}
-.form-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
-}
-.hidden{display:none!important}
 .question{
-  padding:20px;background:var(--panel2);
-  border-radius:12px;margin:15px 0;
+  padding:18px;
+  margin:16px 0;
+  background:#10182d;
+  border:1px solid #293653;
+  border-radius:12px;
 }
+.question h3{font-size:17px;line-height:1.5}
 .option{
-  display:block;width:100%;text-align:left;
-  margin:10px 0;padding:15px;
+  display:block;
+  padding:11px;
+  margin:8px 0;
+  border:1px solid #344361;
+  border-radius:8px;
+  cursor:pointer;
 }
-.option.selected{border-color:var(--green);background:#174033}
-.timer{color:var(--green);font-size:22px;font-weight:900}
-.test-head{display:flex;justify-content:space-between;gap:10px}
-.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-table{width:100%;border-collapse:collapse}
-td,th{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
-.badge{color:var(--green);font-size:12px;font-weight:bold}
-footer{text-align:center;padding:30px;border-top:1px solid var(--border)}
-@media(max-width:700px){
-  .topbar{align-items:flex-start;flex-direction:column}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .grid,.form-grid{grid-template-columns:1fr}
-  main{padding:18px 12px}
+.option:hover{background:#1d2b49}
+.option input{margin-right:9px}
+#timer{
+  position:sticky;
+  top:8px;
+  z-index:5;
+  text-align:center;
+  background:#26395f;
+  padding:13px;
+  border-radius:10px;
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:18px;
 }
+#status{line-height:1.6;color:#c4cee2}
+.small{color:#aab7d1;font-size:14px}
+.hidden{display:none}
+.result-line{
+  padding:10px;
+  border-bottom:1px solid #344361;
+}
+.correct{color:#61df9a}
+.wrong{color:#ff8585}
 </style>
 </head>
-<body>
 
-<header class="topbar">
-  <div class="brand">RANK<span>FORGE</span></div>
-  <nav>
-    <button onclick="showPage('dashboard')">Dashboard</button>
-    <button onclick="showPage('practice')">Practice</button>
-    <button onclick="showPage('scheduled')">Scheduled Tests</button>
-    <button onclick="showPage('leaderboard')">Leaderboard</button>
-  </nav>
-  <div id="account">Guest</div>
+<body>
+<header>
+  <h1>RANKFORGE</h1>
+  <p>PRACTICE. IMPROVE. CONQUER.</p>
+  <p>Chemistry Grand Test</p>
 </header>
 
-<main>
+<div class="container">
 
-<section id="dashboard" class="page active">
-  <div class="hero">
-    <p class="eyebrow">PRACTICE. IMPROVE. CONQUER.</p>
-    <h1>Welcome to <span>RankForge</span></h1>
-    <p>Your AI-powered JEE preparation platform.</p>
-    <button class="primary" onclick="showPage('practice')">
-      Start Practising
-    </button>
+  <div class="card">
+    <h2>Grand Test Schedule</h2>
+    <p id="status">Checking test schedule...</p>
+    <p class="small">14 November 2026 | 10:30 PM – 11:30 PM IST</p>
+    <label for="studentName">Your name</label>
+    <input id="studentName" type="text" placeholder="Enter your name">
+    <br><br>
+    <button id="startBtn" disabled onclick="startTest()">Start Grand Test</button>
   </div>
 
-  <div class="stats">
-    <div class="card"><p>Questions Attempted</p><h2 id="attempted">0</h2></div>
-    <div class="card"><p>Accuracy</p><h2 id="accuracy">0%</h2></div>
-    <div class="card"><p>Tests Completed</p><h2 id="completed">0</h2></div>
-    <div class="card"><p>Total Score</p><h2 id="score">0</h2></div>
-  </div>
+  <div id="testArea" class="hidden">
+    <div id="timer">60:00</div>
+    <div class="card">
+      <h2>Instructions</h2>
+      <p>25 questions: 20 MCQs and 5 numerical questions.</p>
+      <p>Correct: +4 | Incorrect: −1 | Unattempted: 0</p>
+      <p>Total marks: 100</p>
+      <p class="small">Your test will automatically submit at 11:30 PM IST.</p>
+    </div>
 
-  <div class="panel">
-    <h2>Choose Subject</h2>
-    <div class="grid">
-      <button onclick="quickSubject('Physics')">Physics</button>
-      <button onclick="quickSubject('Chemistry')">Chemistry</button>
-      <button onclick="quickSubject('Mathematics')">Mathematics</button>
+    <div id="questions"></div>
+
+    <div class="card">
+      <button onclick="submitTest(false)">Submit Test</button>
     </div>
   </div>
-</section>
 
-<section id="practice" class="page">
-  <h1>Practice & Mock Tests</h1>
-  <div class="panel">
-    <div class="form-grid">
-      <div>
-        <label>Subject</label>
-        <select id="subject">
-          <option>All</option><option>Physics</option>
-          <option>Chemistry</option><option>Mathematics</option>
-        </select>
-      </div>
-      <div>
-        <label>Difficulty</label>
-        <select id="difficulty">
-          <option>Main</option><option>Above Main</option><option>Both</option>
-        </select>
-      </div>
-      <div>
-        <label>Question type</label>
-        <select id="type">
-          <option>Both</option><option>MCQ</option><option>Numerical</option>
-        </select>
-      </div>
-      <div>
-        <label>Question count</label>
-        <select id="count">
-          <option>10</option><option>25</option><option>50</option><option>75</option>
-        </select>
-      </div>
-      <div>
-        <label>Duration (minutes)</label>
-        <select id="duration">
-          <option>30</option><option>60</option><option>90</option><option>180</option>
-        </select>
-      </div>
-    </div>
-    <button class="primary" onclick="startTest()">Start Test</button>
-    <p id="bank-status">Question bank requires backend connection.</p>
+  <div id="resultArea" class="card hidden">
+    <h2>Test Result</h2>
+    <h1 id="finalScore"></h1>
+    <div id="resultDetails"></div>
+    <p class="small">This result is displayed on this device. It is not yet saved to a shared leaderboard.</p>
   </div>
-
-  <div id="exam" class="panel hidden">
-    <div class="test-head">
-      <span id="progress">Question 1</span>
-      <span id="clock" class="timer">00:00</span>
-    </div>
-    <div id="question" class="question"></div>
-    <div class="controls">
-      <button onclick="previous()">Previous</button>
-      <button onclick="next()">Next</button>
-      <button onclick="submitTest()" class="primary">Submit Test</button>
-    </div>
-  </div>
-  <div id="results" class="panel hidden"></div>
-</section>
-
-<section id="scheduled" class="page">
-  <h1>Scheduled Examinations</h1>
-  <p>Only the administrator can create examinations.</p>
-
-  <div id="admin-area" class="panel hidden">
-    <h2>Admin — Schedule Examination</h2>
-    <label>Examination name</label>
-    <input id="exam-name" placeholder="Sunday JEE Mock">
-    <label>Date</label>
-    <input id="exam-date" type="date">
-    <label>Start time</label>
-    <input id="exam-start" type="time">
-    <label>End time</label>
-    <input id="exam-end" type="time">
-    <label>Question count</label>
-    <select id="exam-count">
-      <option>10</option><option>25</option><option>50</option><option>75</option>
-    </select>
-    <button class="primary" onclick="scheduleExam()">Schedule Test</button>
-  </div>
-
-  <div class="panel">
-    <h2>Upcoming Tests</h2>
-    <div id="exam-list">No examinations loaded.</div>
-  </div>
-</section>
-
-<section id="leaderboard" class="page">
-  <h1>Leaderboard</h1>
-  <div class="panel">
-    <p>Connect the database to display participant rankings.</p>
-    <div id="leaderboard-list"></div>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <p>RANKFORGE © 2026 · PRACTICE. IMPROVE. CONQUER.</p>
-</footer>
+</div>
 
 <script>
 "use strict";
 
 /*
-  RankForge frontend foundation.
-
-  Production requirements:
-  - Secure authentication
-  - Server-side AI question generation
-  - Persistent question database
-  - Duplicate detection
-  - Server-enforced scheduled exams
-  - Server-side scoring and leaderboard
-
-  Do not store API secrets in this file.
+  Schedule uses the device's local clock.
+  Month 10 means November in JavaScript.
 */
+const startTime = new Date(2026, 10, 14, 22, 30, 0);
+const endTime   = new Date(2026, 10, 14, 23, 30, 0);
 
-let questions = [];
-let answers = {};
-let current = 0;
-let seconds = 0;
-let interval = null;
-let stats = {attempted:0,correct:0,completed:0,score:0};
-let selectedSubject = "All";
+let testStarted = false;
+let testSubmitted = false;
+let timerInterval = null;
 
-function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+const questions = [
+{
+ type:"mcq",
+ q:"A buffer solution contains 0.2 M NH4OH and 0.1 M NH4Cl. If pKb of NH4OH is 4.75, the approximate pH is:",
+ options:["8.45","9.55","10.25","11.05"],
+ answer:1
+},
+{
+ type:"mcq",
+ q:"For the cell Zn | Zn²⁺(0.01 M) || Cu²⁺(1 M) | Cu, E°cell = 1.10 V. The cell potential at 298 K is approximately:",
+ options:["1.041 V","1.100 V","1.159 V","1.218 V"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"A first-order reaction is 75% complete in 20 minutes. Its half-life is:",
+ options:["5 min","10 min","15 min","20 min"],
+ answer:1
+},
+{
+ type:"mcq",
+ q:"For a reaction, ΔH = −40 kJ mol⁻¹ and ΔS = −100 J K⁻¹ mol⁻¹ at 300 K. ΔG is:",
+ options:["−70 kJ mol⁻¹","−40 kJ mol⁻¹","−10 kJ mol⁻¹","+10 kJ mol⁻¹"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"The magnetic nature of [Fe(CN)6]⁴⁻ is:",
+ options:["Paramagnetic with 4 unpaired electrons","Paramagnetic with 2 unpaired electrons","Diamagnetic","Paramagnetic with 1 unpaired electron"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"The oxidation state of cobalt in [Co(NH3)5Cl]Cl2 is:",
+ options:["+1","+2","+3","+4"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"Boric acid behaves as a Lewis acid because it:",
+ options:["Donates a proton directly","Accepts OH⁻ from water","Donates an electron pair","Forms a strong covalent bond with hydrogen"],
+ answer:1
+},
+{
+ type:"mcq",
+ q:"The most stable oxidation state of lead due to inert pair effect is:",
+ options:["+4","+2","+1","0"],
+ answer:1
+},
+{
+ type:"mcq",
+ q:"Which of the following is the strongest acid?",
+ options:["Phenol","p-Cresol","p-Nitrophenol","Ethanol"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"Ozonolysis of 2-methylbut-2-ene gives:",
+ options:["Two molecules of methanal","Propanone and methanal","Propanal and ethanal","Propanone and ethanal"],
+ answer:3
+},
+{
+ type:"mcq",
+ q:"Which alkyl halide generally undergoes SN2 reaction most readily?",
+ options:["CH3Br","(CH3)3CBr","(CH3)2CHBr","C2H5Br"],
+ answer:0
+},
+{
+ type:"mcq",
+ q:"The electrophile involved in the nitration of benzene is:",
+ options:["NO2−","NO2+","NO+","NH2+"],
+ answer:1
+},
+{
+ type:"mcq",
+ q:"For a particle accelerated through potential difference V, its de Broglie wavelength is proportional to:",
+ options:["V","V²","1/√V","√V"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"For a gaseous reaction with Δn = +1, the relation between Kp and Kc is:",
+ options:["Kp = Kc/RT","Kp = KcRT","Kp = Kc","Kp = Kc(RT)²"],
+ answer:1
+},
+{
+ type:"mcq",
+ q:"The solubility product of AgCl is 1.8 × 10⁻¹⁰. Its solubility in 0.1 M NaCl is approximately:",
+ options:["1.8 × 10⁻⁹ M","1.8 × 10⁻¹⁰ M","1.8 × 10⁻⁸ M","1.8 × 10⁻⁵ M"],
+ answer:0
+},
+{
+ type:"mcq",
+ q:"The spin-only magnetic moment of high-spin Fe³⁺ is approximately:",
+ options:["1.73 BM","4.90 BM","5.92 BM","0 BM"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"The osmotic pressure of a 0.1 M non-electrolyte solution at 300 K is approximately (R = 0.0821 L atm mol⁻¹ K⁻¹):",
+ options:["0.246 atm","2.46 atm","24.6 atm","0.0246 atm"],
+ answer:1
+},
+{
+ type:"mcq",
+ q:"The standard EMF of a Daniell cell is approximately:",
+ options:["0.34 V","0.76 V","1.10 V","1.50 V"],
+ answer:2
+},
+{
+ type:"mcq",
+ q:"Which compound undergoes the Cannizzaro reaction?",
+ options:["Ethanal","Propanal","Acetone","Benzaldehyde"],
+ answer:3
+},
+{
+ type:"mcq",
+ q:"The partial double-bond character of a peptide bond is due to:",
+ options:["Inductive effect","Hydrogen bonding","Resonance","Hyperconjugation"],
+ answer:2
+},
+{
+ type:"num",
+ q:"A weak monoprotic acid has concentration 0.01 M and Ka = 1 × 10⁻⁵. Using the weak-acid approximation, calculate its pH.",
+ answer:3.50,
+ tolerance:0.03
+},
+{
+ type:"num",
+ q:"For A(g) ⇌ 2B(g), Kc = 0.5 at 300 K. Calculate Kp. Use R = 0.0821 L atm mol⁻¹ K⁻¹.",
+ answer:12.315,
+ tolerance:0.15
+},
+{
+ type:"num",
+ q:"A current of 965 A is passed through CuSO4 solution for 1 second. Calculate the mass of copper deposited in grams. (M = 63.5 g mol⁻¹, F = 96500 C mol⁻¹)",
+ answer:0.3175,
+ tolerance:0.005
+},
+{
+ type:"num",
+ q:"A first-order reaction is 90% complete in 10 minutes. Calculate its rate constant in min⁻¹. Use 2.303 as the logarithm constant.",
+ answer:0.2303,
+ tolerance:0.005
+},
+{
+ type:"num",
+ q:"A buffer contains equal concentrations of a weak acid and its conjugate base. If pKa = 4.74, calculate the pH.",
+ answer:4.74,
+ tolerance:0.01
 }
+];
 
-function quickSubject(subject){
-  selectedSubject=subject;
-  document.getElementById("subject").value=subject;
-  showPage("practice");
-}
+function updateSchedule(){
+  const now = new Date();
+  const status = document.getElementById("status");
+  const button = document.getElementById("startBtn");
 
-function startTest(){
-  alert("The question bank and AI generator must be connected before a real test can be generated.");
-}
+  if(testStarted || testSubmitted) return;
 
-function renderQuestion(){
-  if(!questions.length)return;
-  const q=questions[current];
-  document.getElementById("progress").textContent=
-    `Question ${current+1} of ${questions.length}`;
-  document.getElementById("question").innerHTML="";
-  const heading=document.createElement("h3");
-  heading.textContent=q.question;
-  document.getElementById("question").appendChild(heading);
-  if(q.options){
-    q.options.forEach((option,index)=>{
-      const button=document.createElement("button");
-      button.className="option";
-      button.textContent=option;
-      button.onclick=()=>{answers[current]=index;renderQuestion()};
-      if(answers[current]===index)button.classList.add("selected");
-      document.getElementById("question").appendChild(button);
-    });
+  if(now < startTime){
+    button.disabled = true;
+    status.textContent = "Test opens at 10:30 PM IST. Please wait.";
+  }else if(now >= startTime && now < endTime){
+    button.disabled = false;
+    status.textContent = "The test is LIVE! You can start now.";
+  }else{
+    button.disabled = true;
+    status.textContent = "The test window has closed.";
   }
 }
 
-function previous(){
-  if(current>0){current--;renderQuestion()}
-}
+function renderQuestions(){
+  const area = document.getElementById("questions");
+  area.innerHTML = "";
 
-function next(){
-  if(current<questions.length-1){current++;renderQuestion()}
-}
+  questions.forEach((q,index)=>{
+    const box = document.createElement("div");
+    box.className = "question";
 
-function submitTest(){
-  if(!confirm("Submit this test?"))return;
-  clearInterval(interval);
-  alert("Connect the validated question bank and scoring backend to enable real submissions.");
-}
+    const heading = document.createElement("h3");
+    heading.textContent = (index+1)+". "+q.q;
+    box.appendChild(heading);
 
-function scheduleExam(){
-  alert("Scheduling requires authenticated admin access and server-side time enforcement. This frontend form is not yet connected.");
-}
+    if(q.type === "mcq"){
+      q.options.forEach((option,i)=>{
+        const label = document.createElement("label");
+        label.className = "option";
+        label.innerHTML =
+          '<input type="radio" name="q'+index+'" value="'+i+'"> '+
+          String.fromCharCode(65+i)+". "+option;
+        box.appendChild(label);
+      });
+    }else{
+      const input = document.createElement("input");
+      input.type = "number";
+      input.step = "any";
+      input.placeholder = "Enter numerical answer";
+      input.id = "q"+index;
+      box.appendChild(input);
+    }
 
-function updateStats(){
-  document.getElementById("attempted").textContent=stats.attempted;
-  document.getElementById("accuracy").textContent=
-    (stats.attempted?Math.round(stats.correct/stats.attempted*100):0)+"%";
-  document.getElementById("completed").textContent=stats.completed;
-  document.getElementById("score").textContent=stats.score;
-}
-
-updateStats();
-</script>
-  <!-- Your existing code -->
-
-<!-- Your existing scripts -->
-</script>
-
-</body>
-</html>
-</body>
-</html>
-
-<div class="chapter-selector">
-
-  <h2>Select Your JEE Chapters</h2>
-  <p>Choose any chapters or select the entire syllabus.</p>
-
-  <div class="subject-section">
-    <h3>Physics</h3>
-    <button type="button" onclick="toggleAll('physics', true)">Select All</button>
-    <button type="button" onclick="toggleAll('physics', false)">Deselect All</button>
-    <div id="physics" class="chapter-list"></div>
-  </div>
-
-  <div class="subject-section">
-    <h3>Chemistry</h3>
-    <button type="button" onclick="toggleAll('chemistry', true)">Select All</button>
-    <button type="button" onclick="toggleAll('chemistry', false)">Deselect All</button>
-    <div id="chemistry" class="chapter-list"></div>
-  </div>
-
-  <div class="subject-section">
-    <h3>Mathematics</h3>
-    <button type="button" onclick="toggleAll('mathematics', true)">Select All</button>
-    <button type="button" onclick="toggleAll('mathematics', false)">Deselect All</button>
-    <div id="mathematics" class="chapter-list"></div>
-  </div>
-
-  <p id="selectedCount">0 chapters selected</p>
-
-</div>
-
-<script>
-const jeeChapters = {
-  physics: [
-    "Units and Measurements",
-    "Kinematics",
-    "Laws of Motion",
-    "Work, Energy and Power",
-    "Rotational Motion",
-    "Gravitation",
-    "Properties of Solids and Liquids",
-    "Thermodynamics",
-    "Kinetic Theory of Gases",
-    "Oscillations and Waves",
-    "Electrostatics",
-    "Capacitance",
-    "Current Electricity",
-    "Moving Charges and Magnetism",
-    "Magnetism and Matter",
-    "Electromagnetic Induction",
-    "Alternating Current",
-    "Electromagnetic Waves",
-    "Ray Optics",
-    "Wave Optics",
-    "Dual Nature of Matter",
-    "Atoms",
-    "Nuclei",
-    "Electronic Devices"
-  ],
-
-  chemistry: [
-    "Some Basic Concepts of Chemistry",
-    "Atomic Structure",
-    "Classification of Elements and Periodicity",
-    "Chemical Bonding and Molecular Structure",
-    "Chemical Thermodynamics",
-    "Solutions",
-    "Equilibrium",
-    "Redox Reactions",
-    "Electrochemistry",
-    "Chemical Kinetics",
-    "p-Block Elements",
-    "d- and f-Block Elements",
-    "Coordination Compounds",
-    "Purification and Characterisation of Organic Compounds",
-    "Some Basic Principles of Organic Chemistry",
-    "Hydrocarbons",
-    "Organic Compounds Containing Halogens",
-    "Organic Compounds Containing Oxygen",
-    "Organic Compounds Containing Nitrogen",
-    "Biomolecules"
-  ],
-
-  mathematics: [
-    "Sets",
-    "Relations and Functions",
-    "Complex Numbers",
-    "Quadratic Equations",
-    "Matrices",
-    "Determinants",
-    "Permutations and Combinations",
-    "Binomial Theorem",
-    "Sequences and Series",
-    "Limits, Continuity and Differentiability",
-    "Integral Calculus",
-    "Differential Equations",
-    "Coordinate Geometry",
-    "Three Dimensional Geometry",
-    "Vector Algebra",
-    "Statistics",
-    "Probability",
-    "Trigonometry"
-  ]
-};
-
-function renderChapters() {
-  Object.keys(jeeChapters).forEach(subject => {
-    const container = document.getElementById(subject);
-    container.innerHTML = "";
-
-    jeeChapters[subject].forEach(chapter => {
-      const label = document.createElement("label");
-      label.className = "chapter-option";
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.value = chapter;
-      checkbox.dataset.subject = subject;
-      checkbox.addEventListener("change", updateSelectedCount);
-
-      label.appendChild(checkbox);
-      label.appendChild(document.createTextNode(" " + chapter));
-      container.appendChild(label);
-    });
+    area.appendChild(box);
   });
 }
 
-function toggleAll(subject, checked) {
-  document.querySelectorAll(
-    `#${subject} input[type="checkbox"]`
-  ).forEach(box => box.checked = checked);
+function startTest(){
+  const now = new Date();
+  const name = document.getElementById("studentName").value.trim();
 
-  updateSelectedCount();
+  if(!name){
+    alert("Please enter your name first.");
+    return;
+  }
+
+  if(now < startTime || now >= endTime){
+    alert("The test is not currently available.");
+    updateSchedule();
+    return;
+  }
+
+  testStarted = true;
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("testArea").classList.remove("hidden");
+
+  renderQuestions();
+  updateTimer();
+  timerInterval = setInterval(updateTimer,1000);
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function getSelectedChapters() {
-  const selected = {};
+function updateTimer(){
+  if(testSubmitted) return;
 
-  Object.keys(jeeChapters).forEach(subject => {
-    selected[subject] = Array.from(
-      document.querySelectorAll(
-        `#${subject} input:checked`
-      )
-    ).map(box => box.value);
+  const now = new Date();
+  const remaining = Math.max(0,Math.floor((endTime-now)/1000));
+
+  const minutes = Math.floor(remaining/60);
+  const seconds = remaining%60;
+
+  document.getElementById("timer").textContent =
+    String(minutes).padStart(2,"0")+":"+
+    String(seconds).padStart(2,"0");
+
+  if(remaining <= 0){
+    submitTest(true);
+  }
+}
+
+function submitTest(automatic){
+  if(!testStarted || testSubmitted) return;
+
+  if(!automatic && !confirm("Are you sure you want to submit your test?")){
+    return;
+  }
+
+  testSubmitted = true;
+  clearInterval(timerInterval);
+
+  let correct = 0;
+  let wrong = 0;
+  let skipped = 0;
+  let review = "";
+
+  questions.forEach((q,index)=>{
+    let isCorrect = false;
+    let attempted = false;
+    let given = "";
+
+    if(q.type === "mcq"){
+      const selected = document.querySelector(
+        'input[name="q'+index+'"]:checked'
+      );
+
+      if(selected){
+        attempted = true;
+        given = Number(selected.value);
+        isCorrect = given === q.answer;
+      }
+    }else{
+      const input = document.getElementById("q"+index);
+      if(input && input.value.trim() !== ""){
+        attempted = true;
+        given = Number(input.value);
+        isCorrect = Number.isFinite(given) &&
+          Math.abs(given-q.answer) <= q.tolerance;
+      }
+    }
+
+    let line = "";
+    if(!attempted){
+      skipped++;
+      line = '<div class="result-line">Q'+(index+1)+': Unattempted</div>';
+    }else if(isCorrect){
+      correct++;
+      line = '<div class="result-line correct">Q'+(index+1)+': Correct (+4)</div>';
+    }else{
+      wrong++;
+      line = '<div class="result-line wrong">Q'+(index+1)+': Incorrect (−1)</div>';
+    }
+
+    review += line;
   });
 
-  return selected;
+  const score = correct*4-wrong;
+  const name = document.getElementById("studentName").value.trim();
+
+  document.getElementById("testArea").classList.add("hidden");
+  document.getElementById("resultArea").classList.remove("hidden");
+
+  document.getElementById("finalScore").textContent =
+    score+" / 100";
+
+  document.getElementById("resultDetails").innerHTML =
+    "<p><b>Student:</b> "+escapeHTML(name)+"</p>"+
+    "<p><b>Correct:</b> "+correct+"</p>"+
+    "<p><b>Incorrect:</b> "+wrong+"</p>"+
+    "<p><b>Unattempted:</b> "+skipped+"</p>"+
+    "<p><b>Accuracy:</b> "+
+    (correct+wrong ? (correct/(correct+wrong)*100).toFixed(1) : "0")+
+    "%</p><hr>"+review;
+
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function updateSelectedCount() {
-  const count = document.querySelectorAll(
-    ".chapter-list input:checked"
-  ).length;
-
-  document.getElementById("selectedCount").textContent =
-    count + " chapters selected";
+function escapeHTML(value){
+  return value.replace(/[&<>"']/g,character=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[character]);
 }
 
-renderChapters();
+updateSchedule();
+setInterval(updateSchedule,1000);
 </script>
-
-<style>
-.chapter-selector {
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.subject-section {
-  margin: 20px 0;
-  padding: 15px;
-  border: 1px solid #7775;
-  border-radius: 10px;
-}
-
-.chapter-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.chapter-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px;
-  border-radius: 7px;
-  background: #8882;
-  cursor: pointer;
-}
-
-.chapter-option input {
-  width: 17px;
-  height: 17px;
-}
-</style>
+</body>
+</html>
