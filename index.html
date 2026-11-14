@@ -330,3 +330,199 @@ updateStats();
 </script>
 </body>
 </html>
+
+<div class="chapter-selector">
+
+  <h2>Select Your JEE Chapters</h2>
+  <p>Choose any chapters or select the entire syllabus.</p>
+
+  <div class="subject-section">
+    <h3>Physics</h3>
+    <button type="button" onclick="toggleAll('physics', true)">Select All</button>
+    <button type="button" onclick="toggleAll('physics', false)">Deselect All</button>
+    <div id="physics" class="chapter-list"></div>
+  </div>
+
+  <div class="subject-section">
+    <h3>Chemistry</h3>
+    <button type="button" onclick="toggleAll('chemistry', true)">Select All</button>
+    <button type="button" onclick="toggleAll('chemistry', false)">Deselect All</button>
+    <div id="chemistry" class="chapter-list"></div>
+  </div>
+
+  <div class="subject-section">
+    <h3>Mathematics</h3>
+    <button type="button" onclick="toggleAll('mathematics', true)">Select All</button>
+    <button type="button" onclick="toggleAll('mathematics', false)">Deselect All</button>
+    <div id="mathematics" class="chapter-list"></div>
+  </div>
+
+  <p id="selectedCount">0 chapters selected</p>
+
+</div>
+
+<script>
+const jeeChapters = {
+  physics: [
+    "Units and Measurements",
+    "Kinematics",
+    "Laws of Motion",
+    "Work, Energy and Power",
+    "Rotational Motion",
+    "Gravitation",
+    "Properties of Solids and Liquids",
+    "Thermodynamics",
+    "Kinetic Theory of Gases",
+    "Oscillations and Waves",
+    "Electrostatics",
+    "Capacitance",
+    "Current Electricity",
+    "Moving Charges and Magnetism",
+    "Magnetism and Matter",
+    "Electromagnetic Induction",
+    "Alternating Current",
+    "Electromagnetic Waves",
+    "Ray Optics",
+    "Wave Optics",
+    "Dual Nature of Matter",
+    "Atoms",
+    "Nuclei",
+    "Electronic Devices"
+  ],
+
+  chemistry: [
+    "Some Basic Concepts of Chemistry",
+    "Atomic Structure",
+    "Classification of Elements and Periodicity",
+    "Chemical Bonding and Molecular Structure",
+    "Chemical Thermodynamics",
+    "Solutions",
+    "Equilibrium",
+    "Redox Reactions",
+    "Electrochemistry",
+    "Chemical Kinetics",
+    "p-Block Elements",
+    "d- and f-Block Elements",
+    "Coordination Compounds",
+    "Purification and Characterisation of Organic Compounds",
+    "Some Basic Principles of Organic Chemistry",
+    "Hydrocarbons",
+    "Organic Compounds Containing Halogens",
+    "Organic Compounds Containing Oxygen",
+    "Organic Compounds Containing Nitrogen",
+    "Biomolecules"
+  ],
+
+  mathematics: [
+    "Sets",
+    "Relations and Functions",
+    "Complex Numbers",
+    "Quadratic Equations",
+    "Matrices",
+    "Determinants",
+    "Permutations and Combinations",
+    "Binomial Theorem",
+    "Sequences and Series",
+    "Limits, Continuity and Differentiability",
+    "Integral Calculus",
+    "Differential Equations",
+    "Coordinate Geometry",
+    "Three Dimensional Geometry",
+    "Vector Algebra",
+    "Statistics",
+    "Probability",
+    "Trigonometry"
+  ]
+};
+
+function renderChapters() {
+  Object.keys(jeeChapters).forEach(subject => {
+    const container = document.getElementById(subject);
+    container.innerHTML = "";
+
+    jeeChapters[subject].forEach(chapter => {
+      const label = document.createElement("label");
+      label.className = "chapter-option";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = chapter;
+      checkbox.dataset.subject = subject;
+      checkbox.addEventListener("change", updateSelectedCount);
+
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(" " + chapter));
+      container.appendChild(label);
+    });
+  });
+}
+
+function toggleAll(subject, checked) {
+  document.querySelectorAll(
+    `#${subject} input[type="checkbox"]`
+  ).forEach(box => box.checked = checked);
+
+  updateSelectedCount();
+}
+
+function getSelectedChapters() {
+  const selected = {};
+
+  Object.keys(jeeChapters).forEach(subject => {
+    selected[subject] = Array.from(
+      document.querySelectorAll(
+        `#${subject} input:checked`
+      )
+    ).map(box => box.value);
+  });
+
+  return selected;
+}
+
+function updateSelectedCount() {
+  const count = document.querySelectorAll(
+    ".chapter-list input:checked"
+  ).length;
+
+  document.getElementById("selectedCount").textContent =
+    count + " chapters selected";
+}
+
+renderChapters();
+</script>
+
+<style>
+.chapter-selector {
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.subject-section {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #7775;
+  border-radius: 10px;
+}
+
+.chapter-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.chapter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 7px;
+  background: #8882;
+  cursor: pointer;
+}
+
+.chapter-option input {
+  width: 17px;
+  height: 17px;
+}
+</style>
