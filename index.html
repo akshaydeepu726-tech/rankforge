@@ -2,249 +2,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090d1a">
-  <meta name="description" content="RankForge - AI-powered JEE examination platform">
-  <title>RankForge | JEE Practice Platform</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RankForge | JEE Platform</title>
+<style>
+:root {
+  --bg:#090d1a;
+  --panel:#131b2e;
+  --panel2:#1a2540;
+  --text:#f1f5ff;
+  --muted:#9ba9c4;
+  --accent:#7c8cff;
+  --green:#32d69a;
+  --border:#293653;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+button,input,select{font:inherit}
+button{
+  cursor:pointer;border:1px solid var(--border);
+  border-radius:9px;padding:11px 15px;
+  color:var(--text);background:var(--panel2);
+}
+button:hover{border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+input,select{
+  width:100%;padding:12px;margin:7px 0 16px;
+  border:1px solid var(--border);border-radius:9px;
+  background:var(--bg);color:var(--text);
+}
+label{display:block;color:var(--muted);font-size:13px}
+h1,h2,h3{margin-top:0}
+p{color:var(--muted);line-height:1.6}
+.topbar{
+  position:sticky;top:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;padding:16px 5%;
+  background:#0d1425;border-bottom:1px solid var(--border);
+}
+.brand{font-size:22px;font-weight:900;letter-spacing:1px}
+.brand span,.hero span{color:var(--accent)}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+nav button{font-size:13px}
+main{max-width:1150px;margin:auto;padding:30px 20px}
+.page{display:none}
+.page.active{display:block}
+.hero{
+  padding:45px 30px;border:1px solid var(--border);
+  border-radius:18px;background:linear-gradient(120deg,#172345,#111a30);
+}
+.hero h1{font-size:clamp(30px,5vw,52px)}
+.eyebrow{color:var(--green);font-weight:800;letter-spacing:2px}
+.primary{
+  background:var(--accent);color:white;border:0;
+  font-weight:800;margin-top:10px;
+}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:14px;margin:22px 0;
+}
+.card,.panel{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:13px;padding:20px;margin:15px 0;
+}
+.card h2{color:var(--green);font-size:27px}
+.grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+}
+.grid button{padding:22px;font-weight:800}
+.form-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+}
+.hidden{display:none!important}
+.question{
+  padding:20px;background:var(--panel2);
+  border-radius:12px;margin:15px 0;
+}
+.option{
+  display:block;width:100%;text-align:left;
+  margin:10px 0;padding:15px;
+}
+.option.selected{border-color:var(--green);background:#174033}
+.timer{color:var(--green);font-size:22px;font-weight:900}
+.test-head{display:flex;justify-content:space-between;gap:10px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
+.badge{color:var(--green);font-size:12px;font-weight:bold}
+footer{text-align:center;padding:30px;border-top:1px solid var(--border)}
+@media(max-width:700px){
+  .topbar{align-items:flex-start;flex-direction:column}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid,.form-grid{grid-template-columns:1fr}
+  main{padding:18px 12px}
+}
+</style>
 </head>
-
 <body>
-  <div id="app">
 
-    <header class="topbar">
-      <a class="brand" href="#" data-page="dashboard">
-        RANK<span>FORGE</span>
-      </a>
+<header class="topbar">
+  <div class="brand">RANK<span>FORGE</span></div>
+  <nav>
+    <button onclick="showPage('dashboard')">Dashboard</button>
+    <button onclick="showPage('practice')">Practice</button>
+    <button onclick="showPage('scheduled')">Scheduled Tests</button>
+    <button onclick="showPage('leaderboard')">Leaderboard</button>
+  </nav>
+  <div id="account">Guest</div>
+</header>
 
-      <nav class="navigation">
-        <button data-page="dashboard">Dashboard</button>
-        <button data-page="practice">Practice</button>
-        <button data-page="scheduled">Scheduled Tests</button>
-        <button data-page="leaderboard">Leaderboard</button>
-      </nav>
+<main>
 
-      <div class="account-area">
-        <span id="account-name">Guest</span>
-        <button id="auth-button">Sign In</button>
-      </div>
-    </header>
-
-    <main>
-
-      <!-- DASHBOARD -->
-      <section id="page-dashboard" class="page active">
-        <div class="hero">
-          <p class="eyebrow">PRACTICE. IMPROVE. CONQUER.</p>
-          <h1>Welcome to <span>RankForge</span></h1>
-          <p>Your preparation. Your competition. Your rank.</p>
-          <button class="primary-btn" data-page="practice">
-            Start Practising
-          </button>
-        </div>
-
-        <div class="stats-grid">
-          <article class="stat-card">
-            <p>Questions Attempted</p>
-            <h2 id="stat-attempted">0</h2>
-          </article>
-          <article class="stat-card">
-            <p>Accuracy</p>
-            <h2 id="stat-accuracy">0%</h2>
-          </article>
-          <article class="stat-card">
-            <p>Tests Completed</p>
-            <h2 id="stat-tests">0</h2>
-          </article>
-          <article class="stat-card">
-            <p>Average Score</p>
-            <h2 id="stat-average">0</h2>
-          </article>
-        </div>
-
-        <div class="panel">
-          <h2>Choose Your Subject</h2>
-          <div class="subject-grid">
-            <button data-subject="Physics">Physics</button>
-            <button data-subject="Chemistry">Chemistry</button>
-            <button data-subject="Mathematics">Mathematics</button>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h2>Upcoming Examinations</h2>
-          <div id="dashboard-upcoming">
-            No scheduled examinations available.
-          </div>
-        </div>
-      </section>
-
-      <!-- PRACTICE -->
-      <section id="page-practice" class="page">
-        <h1>Practice & Mock Tests</h1>
-        <p>Build a test using the RankForge question bank.</p>
-
-        <div class="panel test-builder">
-          <label for="subject-select">Subject</label>
-          <select id="subject-select">
-            <option value="All">All Subjects</option>
-            <option value="Physics">Physics</option>
-            <option value="Chemistry">Chemistry</option>
-            <option value="Mathematics">Mathematics</option>
-          </select>
-
-          <label for="chapter-select">Chapter</label>
-          <select id="chapter-select">
-            <option value="All">All Chapters</option>
-          </select>
-
-          <label for="difficulty-select">Difficulty</label>
-          <select id="difficulty-select">
-            <option value="Main">JEE Main</option>
-            <option value="Above Main">Above JEE Main</option>
-            <option value="Both">Mixed Difficulty</option>
-          </select>
-
-          <label for="type-select">Question Type</label>
-          <select id="type-select">
-            <option value="Both">MCQ + Numerical</option>
-            <option value="MCQ">MCQ</option>
-            <option value="Numerical">Numerical</option>
-          </select>
-
-          <label for="question-count">Number of Questions</label>
-          <select id="question-count">
-            <option value="10">10 Questions</option>
-            <option value="25">25 Questions</option>
-            <option value="50">50 Questions</option>
-            <option value="75">75 Questions</option>
-          </select>
-
-          <label for="test-duration">Duration</label>
-          <select id="test-duration">
-            <option value="30">30 Minutes</option>
-            <option value="60">60 Minutes</option>
-            <option value="90">90 Minutes</option>
-            <option value="180">180 Minutes</option>
-          </select>
-
-          <button id="generate-test" class="primary-btn">
-            Generate Practice Test
-          </button>
-        </div>
-
-        <div id="test-interface" class="panel hidden">
-          <div class="test-topline">
-            <span id="test-progress">Question 1</span>
-            <span id="test-timer">00:00</span>
-          </div>
-
-          <div class="question-area">
-            <div id="question-metadata"></div>
-            <h2 id="question-text">Question will appear here.</h2>
-            <div id="question-options"></div>
-          </div>
-
-          <div class="test-controls">
-            <button id="mark-review">Mark for Review</button>
-            <button id="previous-question">Previous</button>
-            <button id="next-question">Next</button>
-            <button id="submit-test" class="primary-btn">
-              Submit Test
-            </button>
-          </div>
-        </div>
-
-        <div id="test-results" class="panel hidden">
-          <h2>Test Results</h2>
-          <div id="results-content"></div>
-        </div>
-      </section>
-
-      <!-- SCHEDULED TESTS -->
-      <section id="page-scheduled" class="page">
-        <h1>Scheduled Examinations</h1>
-        <p>Participate in examinations during their official time window.</p>
-
-        <div id="admin-schedule-area" class="panel hidden">
-          <h2>Create Scheduled Test</h2>
-
-          <label for="schedule-title">Examination Name</label>
-          <input id="schedule-title" type="text"
-                 placeholder="Example: Sunday JEE Mock">
-
-          <label for="schedule-date">Examination Date</label>
-          <input id="schedule-date" type="date">
-
-          <label for="schedule-start">Start Time</label>
-          <input id="schedule-start" type="time">
-
-          <label for="schedule-end">End Time</label>
-          <input id="schedule-end" type="time">
-
-          <label for="schedule-questions">Number of Questions</label>
-          <select id="schedule-questions">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="75">75</option>
-          </select>
-
-          <button id="create-scheduled-test" class="primary-btn">
-            Schedule Examination
-          </button>
-        </div>
-
-        <div class="panel">
-          <h2>Available Examinations</h2>
-          <div id="scheduled-test-list">
-            Loading scheduled examinations...
-          </div>
-        </div>
-      </section>
-
-      <!-- LEADERBOARD -->
-      <section id="page-leaderboard" class="page">
-        <h1>Leaderboard</h1>
-
-        <div class="panel">
-          <div id="leaderboard-list">
-            Leaderboard will appear here.
-          </div>
-        </div>
-      </section>
-
-      <!-- AUTHENTICATION -->
-      <div id="auth-modal" class="modal hidden">
-        <div class="modal-content">
-          <button id="close-auth" class="close-btn">×</button>
-          <h2>RankForge Account</h2>
-
-          <label for="auth-email">Email</label>
-          <input id="auth-email" type="email" placeholder="Email address">
-
-          <label for="auth-password">Password</label>
-          <input id="auth-password" type="password"
-                 placeholder="Password">
-
-          <button id="login-button" class="primary-btn">Sign In</button>
-          <button id="signup-button">Create Account</button>
-
-          <p id="auth-message"></p>
-        </div>
-      </div>
-
-    </main>
-
-    <footer>
-      <p>RANKFORGE © 2026</p>
-      <p>PRACTICE. IMPROVE. CONQUER.</p>
-    </footer>
-
+<section id="dashboard" class="page active">
+  <div class="hero">
+    <p class="eyebrow">PRACTICE. IMPROVE. CONQUER.</p>
+    <h1>Welcome to <span>RankForge</span></h1>
+    <p>Your AI-powered JEE preparation platform.</p>
+    <button class="primary" onclick="showPage('practice')">
+      Start Practising
+    </button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
+  <div class="stats">
+    <div class="card"><p>Questions Attempted</p><h2 id="attempted">0</h2></div>
+    <div class="card"><p>Accuracy</p><h2 id="accuracy">0%</h2></div>
+    <div class="card"><p>Tests Completed</p><h2 id="completed">0</h2></div>
+    <div class="card"><p>Total Score</p><h2 id="score">0</h2></div>
+  </div>
+
+  <div class="panel">
+    <h2>Choose Subject</h2>
+    <div class="grid">
+      <button onclick="quickSubject('Physics')">Physics</button>
+      <button onclick="quickSubject('Chemistry')">Chemistry</button>
+      <button onclick="quickSubject('Mathematics')">Mathematics</button>
+    </div>
+  </div>
+</section>
+
+<section id="practice" class="page">
+  <h1>Practice & Mock Tests</h1>
+  <div class="panel">
+    <div class="form-grid">
+      <div>
+        <label>Subject</label>
+        <select id="subject">
+          <option>All</option><option>Physics</option>
+          <option>Chemistry</option><option>Mathematics</option>
+        </select>
+      </div>
+      <div>
+        <label>Difficulty</label>
+        <select id="difficulty">
+          <option>Main</option><option>Above Main</option><option>Both</option>
+        </select>
+      </div>
+      <div>
+        <label>Question type</label>
+        <select id="type">
+          <option>Both</option><option>MCQ</option><option>Numerical</option>
+        </select>
+      </div>
+      <div>
+        <label>Question count</label>
+        <select id="count">
+          <option>10</option><option>25</option><option>50</option><option>75</option>
+        </select>
+      </div>
+      <div>
+        <label>Duration (minutes)</label>
+        <select id="duration">
+          <option>30</option><option>60</option><option>90</option><option>180</option>
+        </select>
+      </div>
+    </div>
+    <button class="primary" onclick="startTest()">Start Test</button>
+    <p id="bank-status">Question bank requires backend connection.</p>
+  </div>
+
+  <div id="exam" class="panel hidden">
+    <div class="test-head">
+      <span id="progress">Question 1</span>
+      <span id="clock" class="timer">00:00</span>
+    </div>
+    <div id="question" class="question"></div>
+    <div class="controls">
+      <button onclick="previous()">Previous</button>
+      <button onclick="next()">Next</button>
+      <button onclick="submitTest()" class="primary">Submit Test</button>
+    </div>
+  </div>
+  <div id="results" class="panel hidden"></div>
+</section>
+
+<section id="scheduled" class="page">
+  <h1>Scheduled Examinations</h1>
+  <p>Only the administrator can create examinations.</p>
+
+  <div id="admin-area" class="panel hidden">
+    <h2>Admin — Schedule Examination</h2>
+    <label>Examination name</label>
+    <input id="exam-name" placeholder="Sunday JEE Mock">
+    <label>Date</label>
+    <input id="exam-date" type="date">
+    <label>Start time</label>
+    <input id="exam-start" type="time">
+    <label>End time</label>
+    <input id="exam-end" type="time">
+    <label>Question count</label>
+    <select id="exam-count">
+      <option>10</option><option>25</option><option>50</option><option>75</option>
+    </select>
+    <button class="primary" onclick="scheduleExam()">Schedule Test</button>
+  </div>
+
+  <div class="panel">
+    <h2>Upcoming Tests</h2>
+    <div id="exam-list">No examinations loaded.</div>
+  </div>
+</section>
+
+<section id="leaderboard" class="page">
+  <h1>Leaderboard</h1>
+  <div class="panel">
+    <p>Connect the database to display participant rankings.</p>
+    <div id="leaderboard-list"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>RANKFORGE © 2026 · PRACTICE. IMPROVE. CONQUER.</p>
+</footer>
+
+<script>
+"use strict";
+
+/*
+  RankForge frontend foundation.
+
+  Production requirements:
+  - Secure authentication
+  - Server-side AI question generation
+  - Persistent question database
+  - Duplicate detection
+  - Server-enforced scheduled exams
+  - Server-side scoring and leaderboard
+
+  Do not store API secrets in this file.
+*/
+
+let questions = [];
+let answers = {};
+let current = 0;
+let seconds = 0;
+let interval = null;
+let stats = {attempted:0,correct:0,completed:0,score:0};
+let selectedSubject = "All";
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function quickSubject(subject){
+  selectedSubject=subject;
+  document.getElementById("subject").value=subject;
+  showPage("practice");
+}
+
+function startTest(){
+  alert("The question bank and AI generator must be connected before a real test can be generated.");
+}
+
+function renderQuestion(){
+  if(!questions.length)return;
+  const q=questions[current];
+  document.getElementById("progress").textContent=
+    `Question ${current+1} of ${questions.length}`;
+  document.getElementById("question").innerHTML="";
+  const heading=document.createElement("h3");
+  heading.textContent=q.question;
+  document.getElementById("question").appendChild(heading);
+  if(q.options){
+    q.options.forEach((option,index)=>{
+      const button=document.createElement("button");
+      button.className="option";
+      button.textContent=option;
+      button.onclick=()=>{answers[current]=index;renderQuestion()};
+      if(answers[current]===index)button.classList.add("selected");
+      document.getElementById("question").appendChild(button);
+    });
+  }
+}
+
+function previous(){
+  if(current>0){current--;renderQuestion()}
+}
+
+function next(){
+  if(current<questions.length-1){current++;renderQuestion()}
+}
+
+function submitTest(){
+  if(!confirm("Submit this test?"))return;
+  clearInterval(interval);
+  alert("Connect the validated question bank and scoring backend to enable real submissions.");
+}
+
+function scheduleExam(){
+  alert("Scheduling requires authenticated admin access and server-side time enforcement. This frontend form is not yet connected.");
+}
+
+function updateStats(){
+  document.getElementById("attempted").textContent=stats.attempted;
+  document.getElementById("accuracy").textContent=
+    (stats.attempted?Math.round(stats.correct/stats.attempted*100):0)+"%";
+  document.getElementById("completed").textContent=stats.completed;
+  document.getElementById("score").textContent=stats.score;
+}
+
+updateStats();
+</script>
 </body>
 </html>
