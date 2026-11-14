@@ -3,256 +3,616 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RankForge | JEE 2027</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RankForge | JEE Mock Platform</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#090e1c;color:#f4f7ff;font-family:Arial,sans-serif}
-header{padding:20px 7%;background:#111a2e;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #26344e}
-.logo{font-size:25px;font-weight:900;color:#62e6b5}
-header span{color:#9eacc4}
-main{max-width:1050px;margin:35px auto;padding:20px}
-.hero{text-align:center;padding:55px 10px}
-.hero h1{font-size:clamp(35px,6vw,60px);margin:12px 0}
-.hero h1 span{color:#62e6b5}
-p{color:#aebbd1;line-height:1.6}
-.card{background:#141f35;border:1px solid #283956;border-radius:15px;padding:25px;margin:20px 0}
-button{border:0;background:#62e6b5;color:#07151a;padding:13px 21px;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px}
-button:hover{opacity:.85}
-input{width:100%;padding:14px;border-radius:8px;background:#091326;color:white;border:1px solid #435572;margin:12px 0}
-.hidden{display:none!important}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
-.test{background:#1d2b45;border-radius:12px;padding:20px}
-.test h3{margin-top:0}
-.option{display:block;width:100%;text-align:left;background:#263650;color:white;margin:10px 0}
-.option.selected{background:#16785e}
-#timer{color:#62e6b5;font-size:20px;font-weight:bold}
-.small{font-size:13px;color:#91a2bd}
-table{width:100%;border-collapse:collapse}
-td,th{padding:12px;text-align:left;border-bottom:1px solid #34435c}
+:root {
+  --bg:#080d19;
+  --panel:#111a2d;
+  --panel2:#17233a;
+  --text:#f2f5ff;
+  --muted:#9ba9c2;
+  --blue:#527cff;
+  --green:#20c997;
+  --red:#ff6577;
+  --border:#26344e;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 6%;
+  border-bottom:1px solid var(--border);
+}
+.logo {font-size:23px;font-weight:900}
+.logo span {color:var(--blue)}
+main {max-width:1100px;margin:35px auto;padding:0 18px}
+h1 {font-size:32px;margin-bottom:8px}
+p {color:var(--muted);line-height:1.6}
+.card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:22px;
+  margin:15px 0;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+.stat {font-size:28px;font-weight:bold;margin-top:12px}
+button {
+  border:0;
+  background:var(--blue);
+  color:white;
+  padding:12px 19px;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:5px 3px;
+}
+button:hover {filter:brightness(1.15)}
+.secondary {background:var(--panel2);border:1px solid var(--border)}
+.danger {background:#a7354b}
+input,select {
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:white;
+  padding:12px;
+  width:100%;
+  margin:8px 0 16px;
+}
+label {font-size:14px;color:var(--muted)}
+.hidden {display:none!important}
+.nav {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:20px 0;
+}
+.nav button {background:var(--panel2)}
+.nav button.active {background:var(--blue)}
+.question {
+  font-size:20px;
+  line-height:1.6;
+  margin:20px 0;
+}
+.option {
+  display:block;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  margin:10px 0;
+  cursor:pointer;
+}
+.option.selected {border-color:var(--blue);background:#192c50}
+.option input {width:auto;margin:0 10px 0 0}
+.timer {font-size:23px;font-weight:bold;color:var(--green)}
+#questionGrid {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+}
+.qnum {
+  background:var(--panel2);
+  padding:12px 4px;
+  border-radius:7px;
+}
+.correct {color:var(--green)}
+.wrong {color:var(--red)}
+footer {
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<div class="logo">⚡ RANKFORGE</div>
-<span>JEE 2027</span>
+  <div class="logo">RANK<span>FORGE</span></div>
+  <div id="userDisplay">JEE MOCK PLATFORM</div>
 </header>
 
 <main>
-<section class="hero">
-<p>YOUR JEE PREPARATION PLATFORM</p>
-<h1>Practice. <span>Improve.</span><br>Conquer.</h1>
-<p>Challenge yourself. Track your progress. Climb the leaderboard.</p>
-<button onclick="show('login')">Start Practising →</button>
+
+<!-- HOME -->
+<section id="home">
+  <h1>Practice. Improve. Conquer.</h1>
+  <p>Your personal JEE preparation platform.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Full-Length Mock</h3>
+      <p>75 Questions · 300 Marks · 3 Hours</p>
+      <button onclick="openSetup('full')">Start Full Mock</button>
+    </div>
+
+    <div class="card">
+      <h3>Subject Mocks</h3>
+      <p>Individual subject examinations.</p>
+      <button onclick="openSetup('subject')">Choose Subject</button>
+    </div>
+
+    <div class="card">
+      <h3>Custom Mock</h3>
+      <p>Create your own examination.</p>
+      <button onclick="openSetup('custom')">Create Mock</button>
+    </div>
+
+    <div class="card">
+      <h3>Practice Zone</h3>
+      <p>Practice individual questions.</p>
+      <button onclick="openSetup('practice')">Start Practice</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>My Performance</h3>
+      <div class="stat" id="totalTests">0</div>
+      <p>Tests completed on this browser</p>
+    </div>
+    <div class="card">
+      <h3>Average Score</h3>
+      <div class="stat" id="averageScore">0</div>
+      <p>Across completed tests</p>
+    </div>
+    <div class="card">
+      <h3>Leaderboard</h3>
+      <p>Local demo leaderboard</p>
+      <button onclick="showLeaderboard()">View Leaderboard</button>
+    </div>
+  </div>
 </section>
 
-<section id="login" class="card hidden">
-<h2>Welcome to RankForge</h2>
-<p>Enter your display name to get started.</p>
-<input id="name" placeholder="Enter your name">
-<button onclick="login()">Continue →</button>
+<!-- SETUP -->
+<section id="setup" class="hidden">
+  <button class="secondary" onclick="goHome()">← Back</button>
+  <h1 id="setupTitle">Configure Examination</h1>
+
+  <div class="card">
+    <label>Examination name</label>
+    <input id="examName" value="RankForge Mock">
+
+    <div id="subjectField">
+      <label>Subject</label>
+      <select id="subject">
+        <option>Mathematics</option>
+        <option>Physics</option>
+        <option>Chemistry</option>
+      </select>
+    </div>
+
+    <div id="customSubjects" class="hidden">
+      <label>Number of questions</label>
+      <select id="questionCount">
+        <option value="5">5 Questions</option>
+        <option value="10" selected>10 Questions</option>
+        <option value="15">15 Questions</option>
+      </select>
+      <label>Duration (minutes)</label>
+      <input id="duration" type="number" min="1" max="180" value="30">
+      <label>Subject combination</label>
+      <select id="combination">
+        <option value="all">All Subjects</option>
+        <option value="Maths">Mathematics</option>
+        <option value="Physics">Physics</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Maths,Physics">Maths + Physics</option>
+        <option value="Physics,Chemistry">Physics + Chemistry</option>
+        <option value="Maths,Chemistry">Maths + Chemistry</option>
+      </select>
+    </div>
+
+    <p id="setupInfo"></p>
+    <button onclick="beginTest()">Continue</button>
+  </div>
 </section>
 
-<section id="dashboard" class="hidden">
-<div class="card">
-<h2 id="welcome">Welcome!</h2>
-<p>Choose your examination.</p>
-<div class="grid">
-<div class="test">
-<h3>Daily Mixed Test</h3>
-<p>Physics + Chemistry + Mathematics</p>
-<button onclick="startTest('mixed')">Start Test</button>
-</div>
-<div class="test">
-<h3>Physics</h3>
-<p>Physics practice</p>
-<button onclick="startTest('physics')">Start Test</button>
-</div>
-<div class="test">
-<h3>Chemistry</h3>
-<p>Chemistry practice</p>
-<button onclick="startTest('chemistry')">Start Test</button>
-</div>
-<div class="test">
-<h3>Mathematics</h3>
-<p>Mathematics practice</p>
-<button onclick="startTest('maths')">Start Test</button>
-</div>
-</div>
-</div>
-<div class="card">
-<h2>Your Performance</h2>
-<p id="stats">No tests completed yet.</p>
-<button onclick="leaderboard()">View Leaderboard</button>
-</div>
+<!-- EXAM -->
+<section id="exam" class="hidden">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap">
+      <div>
+        <b id="examHeading">Mock Test</b>
+        <p id="examSubject"></p>
+      </div>
+      <div class="timer" id="timer">00:00</div>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:2fr 1fr">
+    <div class="card">
+      <p id="questionLabel">Question 1</p>
+      <div class="question" id="questionText"></div>
+      <div id="options"></div>
+
+      <button class="secondary" onclick="previousQuestion()">Previous</button>
+      <button onclick="saveNext()">Save & Next</button>
+      <button class="secondary" onclick="clearAnswer()">Clear</button>
+    </div>
+
+    <div class="card">
+      <h3>Question Navigator</h3>
+      <div id="questionGrid"></div>
+      <p>+4 Correct | -1 Incorrect</p>
+      <button class="danger" onclick="submitTest()">Submit Test</button>
+    </div>
+  </div>
 </section>
 
-<section id="exam" class="card hidden">
-<div style="display:flex;justify-content:space-between;gap:10px">
-<span id="progress"></span>
-<span id="timer">00:00</span>
-</div>
-<hr>
-<h2 id="question"></h2>
-<div id="options"></div>
-<button onclick="nextQuestion()">Save & Next →</button>
-<button onclick="finishTest()" style="background:#f0bd62">Submit Test</button>
-<p class="small">Marking: +4 correct, -1 incorrect, 0 unattempted.</p>
+<!-- RESULTS -->
+<section id="results" class="hidden">
+  <h1>Examination Result</h1>
+  <div class="card">
+    <div class="stat" id="finalScore">0 / 0</div>
+    <p id="resultName"></p>
+    <div class="grid">
+      <div><h3 class="correct" id="correctCount">0</h3><p>Correct</p></div>
+      <div><h3 class="wrong" id="wrongCount">0</h3><p>Incorrect</p></div>
+      <div><h3 id="skipCount">0</h3><p>Unattempted</p></div>
+      <div><h3 id="accuracy">0%</h3><p>Accuracy</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Question-wise Analysis</h3>
+    <div id="analysis"></div>
+  </div>
+
+  <button onclick="goHome()">Return to Dashboard</button>
 </section>
 
-<section id="result" class="card hidden">
-<h2>Test completed!</h2>
-<h1 id="finalScore" style="color:#62e6b5"></h1>
-<p id="breakdown"></p>
-<h3>Question analysis</h3>
-<div id="analysis"></div>
-<button onclick="home()">Return to Dashboard</button>
+<!-- LEADERBOARD -->
+<section id="leaderboard" class="hidden">
+  <button class="secondary" onclick="goHome()">← Back</button>
+  <h1>Leaderboard</h1>
+  <div class="card" id="leaderboardContent"></div>
 </section>
 
-<section id="board" class="card hidden">
-<h2>Leaderboard</h2>
-<p class="small">Scores recorded on this browser.</p>
-<div id="leaderboardData"></div>
-<button onclick="home()">Back</button>
-</section>
 </main>
 
+<footer>RANKFORGE © 2026 · PRACTICE. IMPROVE. CONQUER.</footer>
+
 <script>
-const bank={
-mixed:[
-{q:"What is the derivative of x²?",o:["x","2x","x³","2"],a:1,s:"Maths"},
-{q:"SI unit of electric current?",o:["Volt","Ohm","Ampere","Watt"],a:2,s:"Physics"},
-{q:"Atomic number of oxygen?",o:["6","7","8","16"],a:2,s:"Chemistry"},
-{q:"Value of sin 30°?",o:["0","1","1/2","√3/2"],a:2,s:"Maths"},
-{q:"Which particle has negative charge?",o:["Proton","Electron","Neutron","Alpha"],a:1,s:"Chemistry"},
-{q:"SI unit of force?",o:["Joule","Newton","Watt","Pascal"],a:1,s:"Physics"},
-{q:"pH of neutral water at 25°C?",o:["0","5","7","14"],a:2,s:"Chemistry"},
-{q:"Integral of 2x dx?",o:["x²+C","2x²+C","x+C","x³+C"],a:0,s:"Maths"},
-{q:"Dimensional formula of velocity?",o:["LT⁻¹","LT⁻²","MLT⁻¹","L²T⁻¹"],a:0,s:"Physics"},
-{q:"Derivative of sin x?",o:["cos x","-cos x","tan x","-sin x"],a:0,s:"Maths"}
-],
-physics:[
-{q:"SI unit of force?",o:["Joule","Newton","Watt","Pascal"],a:1},
-{q:"Dimensional formula of velocity?",o:["LT⁻¹","LT⁻²","MLT⁻¹","L²T⁻¹"],a:0},
-{q:"SI unit of capacitance?",o:["Farad","Henry","Tesla","Weber"],a:0},
-{q:"Ohm's law is represented by?",o:["V=IR","P=VI","F=ma","Q=It"],a:0}
-],
-chemistry:[
-{q:"Atomic number represents number of?",o:["Neutrons","Protons","Nucleons","Isotopes"],a:1},
-{q:"pH of neutral water at 25°C?",o:["0","5","7","14"],a:2},
-{q:"Which is an alkali metal?",o:["Calcium","Sodium","Aluminium","Iron"],a:1},
-{q:"Hybridisation of carbon in methane?",o:["sp","sp²","sp³","dsp²"],a:2}
-],
-maths:[
-{q:"Integral of 2x dx?",o:["x²+C","2x²+C","x+C","x³+C"],a:0},
-{q:"Derivative of sin x?",o:["cos x","-cos x","tan x","-sin x"],a:0},
-{q:"Value of sin 30°?",o:["0","1","1/2","√3/2"],a:2},
-{q:"Derivative of x³?",o:["x²","2x","3x²","3x"],a:2}
-]
-};
 
-let user="",questions=[],answers=[],index=0,seconds=0,clock=null;
-let testName="";
+// DEMO QUESTION BANK
+// Add more verified JEE questions as the question bank grows.
 
-function show(id){
-["login","dashboard","exam","result","board"].forEach(x=>document.getElementById(x).classList.add("hidden"));
-document.getElementById(id).classList.remove("hidden");
+const bank = [
+{
+ subject:"Chemistry",
+ topic:"Atomic Structure",
+ q:"The maximum number of electrons in an orbital is:",
+ options:["1","2","4","8"],
+ answer:1
+},
+{
+ subject:"Chemistry",
+ topic:"Atomic Structure",
+ q:"The number of orbitals in the third shell is:",
+ options:["3","5","9","18"],
+ answer:2
+},
+{
+ subject:"Chemistry",
+ topic:"Periodic Table",
+ q:"Which element exhibits the strongest inert pair effect among these?",
+ options:["C","Si","Sn","Pb"],
+ answer:3
+},
+{
+ subject:"Chemistry",
+ topic:"Group 13",
+ q:"The geometry of BF3 is:",
+ options:["Tetrahedral","Trigonal planar","Pyramidal","Linear"],
+ answer:1
+},
+{
+ subject:"Physics",
+ topic:"Electrostatics",
+ q:"The SI unit of electric field is:",
+ options:["N/C","J/C","C/N","N m"],
+ answer:0
+},
+{
+ subject:"Physics",
+ topic:"Current Electricity",
+ q:"The resistance of a conductor is directly proportional to:",
+ options:["Area","Length","Conductivity","Current"],
+ answer:1
+},
+{
+ subject:"Physics",
+ topic:"Capacitors",
+ q:"The energy stored in a capacitor is:",
+ options:["CV","CV²/2","C²V","2CV²"],
+ answer:1
+},
+{
+ subject:"Physics",
+ topic:"Modern Physics",
+ q:"The energy of a photon is:",
+ options:["hν","h/ν","ν/h","mc"],
+ answer:0
+},
+{
+ subject:"Mathematics",
+ topic:"Integration",
+ q:"The integral of 2x dx is:",
+ options:["x²+C","2x²+C","x+C","x³+C"],
+ answer:0
+},
+{
+ subject:"Mathematics",
+ topic:"Differentiation",
+ q:"The derivative of sin x is:",
+ options:["-cos x","cos x","tan x","-sin x"],
+ answer:1
+},
+{
+ subject:"Mathematics",
+ topic:"Probability",
+ q:"The probability of an impossible event is:",
+ options:["0","1","1/2","-1"],
+ answer:0
+},
+{
+ subject:"Mathematics",
+ topic:"Matrices",
+ q:"The determinant of an identity matrix of order 2 is:",
+ options:["0","1","2","-1"],
+ answer:1
+}
+];
+
+let mode="";
+let questions=[];
+let answers={};
+let current=0;
+let seconds=0;
+let interval=null;
+let submitted=false;
+
+function show(id) {
+ ["home","setup","exam","results","leaderboard"].forEach(x=>{
+  document.getElementById(x).classList.add("hidden");
+ });
+ document.getElementById(id).classList.remove("hidden");
 }
 
-function login(){
-let n=document.getElementById("name").value.trim();
-if(!n)return alert("Please enter your name");
-user=n;
-localStorage.setItem("rf_user",user);
-dashboard();
+function goHome() {
+ clearInterval(interval);
+ updateStats();
+ show("home");
 }
 
-function dashboard(){
-document.getElementById("welcome").innerText="Welcome, "+user+"!";
-let records=JSON.parse(localStorage.getItem("rf_results")||"[]");
-document.getElementById("stats").innerText=records.filter(x=>x.name===user).length+" tests completed on this device.";
-show("dashboard");
+function openSetup(type) {
+ mode=type;
+ show("setup");
+
+ document.getElementById("subjectField").classList.toggle("hidden",type==="full"||type==="custom");
+ document.getElementById("customSubjects").classList.toggle("hidden",type!=="custom");
+
+ document.getElementById("setupTitle").textContent=
+  type==="full"?"Full-Length Mock":
+  type==="subject"?"Subject Mock":
+  type==="practice"?"Practice Zone":"Custom Mock";
+
+ document.getElementById("setupInfo").textContent=
+  type==="full"?"75 questions, 300 marks, 180 minutes. Demo bank currently contains fewer questions.":
+  type==="practice"?"Practice questions from the available question bank.":
+  "Choose your preferred examination settings.";
 }
 
-function startTest(type){
-testName=type;
-questions=bank[type];
-answers=Array(questions.length).fill(-1);
-index=0;seconds=0;
-show("exam");
-clearInterval(clock);
-clock=setInterval(()=>{
-seconds++;
-document.getElementById("timer").innerText=
-String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
-},1000);
-render();
+function beginTest() {
+ let pool=[...bank];
+
+ if(mode==="subject") {
+  const s=document.getElementById("subject").value;
+  pool=pool.filter(q=>q.subject===s);
+ }
+
+ if(mode==="custom") {
+  const combo=document.getElementById("combination").value;
+  if(combo!=="all") {
+   const subjects=combo.split(",");
+   pool=pool.filter(q=>subjects.includes(
+    q.subject==="Mathematics"?"Maths":q.subject
+   ));
+  }
+ }
+
+ const requested=mode==="full"?75:
+  mode==="practice"?5:
+  mode==="subject"?pool.length:
+  Number(document.getElementById("questionCount").value);
+
+ if(pool.length===0) {
+  alert("No questions available for this selection yet.");
+  return;
+ }
+
+ questions=pool.sort(()=>Math.random()-.5).slice(0,requested);
+ answers={};
+ current=0;
+ submitted=false;
+
+ seconds=mode==="full"?10800:
+  mode==="practice"?600:
+  mode==="subject"?Math.max(600,questions.length*120):
+  Number(document.getElementById("duration").value)*60;
+
+ document.getElementById("examHeading").textContent=
+  document.getElementById("examName").value||"RankForge Mock";
+
+ show("exam");
+ renderQuestion();
+ renderGrid();
+ startTimer();
 }
 
-function render(){
-let q=questions[index];
-document.getElementById("progress").innerText=
-"Question "+(index+1)+" / "+questions.length;
-document.getElementById("question").innerText=q.q;
-let area=document.getElementById("options");
-area.innerHTML="";
-q.o.forEach((o,i)=>{
-let b=document.createElement("button");
-b.className="option"+(answers[index]===i?" selected":"");
-b.innerText=String.fromCharCode(65+i)+". "+o;
-b.onclick=()=>{
-answers[index]=i;
-render();
-};
-area.appendChild(b);
-});
+function startTimer() {
+ clearInterval(interval);
+ updateTimer();
+
+ interval=setInterval(()=>{
+  seconds--;
+  updateTimer();
+  if(seconds<=0) submitTest();
+ },1000);
 }
 
-function nextQuestion(){
-if(index<questions.length-1){index++;render();}
-else finishTest();
+function updateTimer() {
+ const m=Math.floor(seconds/60);
+ const s=seconds%60;
+ document.getElementById("timer").textContent=
+  String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
 }
 
-function finishTest(){
-clearInterval(clock);
-let correct=0,wrong=0,skipped=0;
-questions.forEach((q,i)=>{
-if(answers[i]===-1)skipped++;
-else if(answers[i]===q.a)correct++;
-else wrong++;
-});
-let score=correct*4-wrong;
-let result={name:user,test:testName,score,correct,wrong,skipped,time:seconds,date:new Date().toLocaleString()};
-let records=JSON.parse(localStorage.getItem("rf_results")||"[]");
-records.push(result);
-localStorage.setItem("rf_results",JSON.stringify(records));
-document.getElementById("finalScore").innerText=score+" / "+(questions.length*4);
-document.getElementById("breakdown").innerText=
-correct+" Correct | "+wrong+" Incorrect | "+skipped+" Unattempted | "+seconds+" seconds";
-document.getElementById("analysis").innerHTML=questions.map((q,i)=>
-"<p>Q"+(i+1)+": Your answer: "+
-(answers[i]===-1?"Skipped":q.o[answers[i]])+
-" | Correct: "+q.o[q.a]+
-"</p>").join("");
-show("result");
+function renderQuestion() {
+ const q=questions[current];
+ document.getElementById("questionLabel").textContent=
+  `Question ${current+1} of ${questions.length}`;
+ document.getElementById("examSubject").textContent=
+  q.subject+" · "+q.topic;
+ document.getElementById("questionText").textContent=q.q;
+
+ document.getElementById("options").innerHTML="";
+
+ q.options.forEach((option,i)=>{
+  const label=document.createElement("label");
+  label.className="option"+(answers[current]===i?" selected":"");
+  const radio=document.createElement("input");
+  radio.type="radio";
+  radio.checked=answers[current]===i;
+  radio.name="answer";
+  radio.onchange=()=> {
+   answers[current]=i;
+   renderQuestion();
+   renderGrid();
+  };
+  label.append(radio,document.createTextNode(option));
+  document.getElementById("options").append(label);
+ });
 }
 
-function leaderboard(){
-let records=JSON.parse(localStorage.getItem("rf_results")||"[]");
-records.sort((a,b)=>b.score-a.score);
-document.getElementById("leaderboardData").innerHTML=
-records.length? "<table><tr><th>Rank</th><th>Name</th><th>Test</th><th>Score</th></tr>"+
-records.map((r,i)=>"<tr><td>"+(i+1)+"</td><td>"+r.name+"</td><td>"+r.test+"</td><td>"+r.score+"</td></tr>").join("")+"</table>":"No results yet.";
-show("board");
+function renderGrid() {
+ const grid=document.getElementById("questionGrid");
+ grid.innerHTML="";
+ questions.forEach((q,i)=>{
+  const b=document.createElement("button");
+  b.className="qnum secondary";
+  b.textContent=i+1;
+  if(answers[i]!==undefined)b.style.borderColor="var(--green)";
+  b.onclick=()=>{current=i;renderQuestion();};
+  grid.append(b);
+ });
 }
 
-function home(){dashboard();}
+function previousQuestion() {
+ if(current>0){current--;renderQuestion();}
+}
 
-window.onload=()=>{
-user=localStorage.getItem("rf_user")||"";
-if(user)dashboard();
-else show("login");
-};
+function saveNext() {
+ if(current<questions.length-1){current++;renderQuestion();}
+ else alert("You are at the last question. Submit when ready.");
+ renderGrid();
+}
+
+function clearAnswer() {
+ delete answers[current];
+ renderQuestion();
+ renderGrid();
+}
+
+function submitTest() {
+ if(submitted)return;
+ if(!confirm("Are you sure you want to submit this test?"))return;
+
+ submitted=true;
+ clearInterval(interval);
+
+ let correct=0,wrong=0,skip=0,score=0;
+
+ questions.forEach((q,i)=>{
+  if(answers[i]===undefined)skip++;
+  else if(answers[i]===q.answer){correct++;score+=4;}
+  else {wrong++;score-=1;}
+ });
+
+ const accuracy=correct+wrong===0?0:
+  Math.round(correct/(correct+wrong)*100);
+
+ const result={
+  name:document.getElementById("examHeading").textContent,
+  score,correct,wrong,skip,accuracy,
+  total:questions.length,
+  date:new Date().toLocaleString()
+ };
+
+ const history=JSON.parse(localStorage.getItem("rf_history")||"[]");
+ history.push(result);
+ localStorage.setItem("rf_history",JSON.stringify(history));
+
+ document.getElementById("finalScore").textContent=
+  score+" / "+(questions.length*4);
+ document.getElementById("resultName").textContent=result.name;
+ document.getElementById("correctCount").textContent=correct;
+ document.getElementById("wrongCount").textContent=wrong;
+ document.getElementById("skipCount").textContent=skip;
+ document.getElementById("accuracy").textContent=accuracy+"%";
+
+ document.getElementById("analysis").innerHTML=questions.map((q,i)=>{
+  const a=answers[i];
+  const status=a===undefined?"Unattempted":
+   a===q.answer?"Correct":"Incorrect";
+  return `<div class="card">
+   <b>Q${i+1}. ${q.topic}</b>
+   <p>${q.q}</p>
+   <p>Your answer: ${a===undefined?"Not attempted":q.options[a]}</p>
+   <p>Correct answer: ${q.options[q.answer]}</p>
+   <b>${status}</b>
+  </div>`;
+ }).join("");
+
+ show("results");
+ updateStats();
+}
+
+function updateStats() {
+ const h=JSON.parse(localStorage.getItem("rf_history")||"[]");
+ document.getElementById("totalTests").textContent=h.length;
+ const avg=h.length?
+  Math.round(h.reduce((s,x)=>s+x.score,0)/h.length):0;
+ document.getElementById("averageScore").textContent=avg;
+}
+
+function showLeaderboard() {
+ const h=JSON.parse(localStorage.getItem("rf_history")||"[]");
+ const sorted=[...h].sort((a,b)=>b.score-a.score);
+
+ document.getElementById("leaderboardContent").innerHTML=
+  sorted.length?sorted.map((x,i)=>
+   `<p>#${i+1} — ${x.name}: <b>${x.score}</b></p>`
+  ).join(""):"No test results yet.";
+
+ show("leaderboard");
+}
+
+updateStats();
+
 </script>
 </body>
 </html>
