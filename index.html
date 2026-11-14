@@ -1,651 +1,250 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RankForge | JEE Main Mock Platform</title>
-<style>
-:root{--bg:#080d19;--panel:#111a2d;--panel2:#192640;--line:#293955;--text:#f4f7ff;--muted:#a8b5ca;--blue:#6287ff;--green:#2bd39a;--red:#ff7184;--amber:#ffc66b}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Arial,sans-serif}
-header{padding:17px max(18px,calc((100% - 1120px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:15px}
-.logo{font-weight:900;font-size:23px;letter-spacing:.5px}
-.logo span{color:var(--blue)}
-main{max-width:1120px;margin:30px auto;padding:0 18px}
-.muted{color:var(--muted)}
-h1{font-size:30px;margin:8px 0}
-h2{font-size:21px;margin:0 0 12px}
-h3{margin:0 0 8px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:19px;margin:13px 0}
-button{border:0;border-radius:9px;padding:11px 16px;background:var(--blue);color:white;font-weight:700;cursor:pointer;margin:4px 3px}
-button:hover{filter:brightness(1.12)}
-button:disabled{opacity:.45;cursor:not-allowed}
-.secondary{background:var(--panel2);border:1px solid var(--line)}
-.danger{background:#a63d50}
-input,select{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:#0b1323;color:var(--text);margin:5px 0 14px}
-label{color:var(--muted);font-size:13px}
-.hidden{display:none!important}
-.stat{font-size:27px;font-weight:800}
-.pill{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:4px 10px;color:var(--muted);font-size:12px}
-.examtop{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.timer{font-size:24px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums}
-.examgrid{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:14px}
-.qtext{font-size:19px;line-height:1.6;margin:20px 0}
-.option{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:9px;margin:9px 0;cursor:pointer}
-.option input{width:auto;margin:3px 0 0}
-.option.selected{border-color:var(--blue);background:#17284b}
-.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.qbtn{margin:0;padding:10px 2px;background:var(--panel2);border:1px solid var(--line)}
-.qbtn.answered{border-color:var(--green)}
-.qbtn.review{outline:2px solid var(--amber)}
-.qbtn.current{background:var(--blue)}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.row>*{flex:1}
-.subjecthead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.reviewitem{padding:13px;border:1px solid var(--line);border-radius:10px;margin:10px 0}
-.good{color:var(--green)}
-.bad{color:var(--red)}
-.warn{color:var(--amber)}
-.small{font-size:13px}
-.right{text-align:right}
-footer{text-align:center;color:var(--muted);padding:25px}
-@media(max-width:760px){
-.examgrid{grid-template-columns:1fr}
-.palette{grid-template-columns:repeat(8,1fr)}
-header{align-items:flex-start;flex-direction:column}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d1a">
+  <meta name="description" content="RankForge - AI-powered JEE examination platform">
+  <title>RankForge | JEE Practice Platform</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-
-<header>
-<div class="logo">RANK<span>FORGE</span></div>
-<div class="muted">PRACTICE. IMPROVE. CONQUER.</div>
-</header>
-
-<main>
-
-<section id="home">
-<h1>Your JEE preparation arena.</h1>
-<p class="muted">Practice mocks, track your performance and improve through detailed analysis. This prototype currently saves results on this device only.</p>
-
-<div class="grid">
-<div class="card">
-<span class="pill">25 questions · 100 marks</span>
-<h2>Mathematics</h2>
-<p class="muted">20 MCQs + 5 numerical</p>
-<button onclick="startSubject('Mathematics')">Start Maths</button>
-</div>
-
-<div class="card">
-<span class="pill">25 questions · 100 marks</span>
-<h2>Physics</h2>
-<p class="muted">20 MCQs + 5 numerical</p>
-<button onclick="startSubject('Physics')">Start Physics</button>
-</div>
-
-<div class="card">
-<span class="pill">25 questions · 100 marks</span>
-<h2>Chemistry</h2>
-<p class="muted">20 MCQs + 5 numerical</p>
-<button onclick="startSubject('Chemistry')">Start Chemistry</button>
-</div>
-
-<div class="card">
-<span class="pill">75 questions · 300 marks</span>
-<h2>Full-length mock</h2>
-<p class="muted">3 hours · all three subjects</p>
-<button onclick="startFull()">Start Full Mock</button>
-</div>
-</div>
-
-<div class="card">
-<h2>Custom mock</h2>
-<div class="grid">
-<div>
-<label>Subject</label>
-<select id="customSubject">
-<option value="All">All subjects</option>
-<option>Mathematics</option>
-<option>Physics</option>
-<option>Chemistry</option>
-</select>
-</div>
-<div>
-<label>Question count</label>
-<select id="customCount">
-<option>5</option>
-<option selected>10</option>
-<option>15</option>
-<option>20</option>
-<option>25</option>
-</select>
-</div>
-<div>
-<label>Duration (minutes)</label>
-<input id="customMinutes" type="number" min="5" max="180" value="30">
-</div>
-</div>
-<button onclick="startCustom()">Create custom mock</button>
-</div>
-
-<div class="grid">
-<div class="card">
-<h3>Tests completed</h3>
-<div class="stat" id="testCount">0</div>
-</div>
-<div class="card">
-<h3>Average score</h3>
-<div class="stat" id="avgScore">—</div>
-<p class="muted small">Percentage of available marks</p>
-</div>
-<div class="card">
-<h3>Recent results</h3>
-<div id="recentResults" class="muted small">No tests completed yet.</div>
-</div>
-</div>
-
-<div class="card">
-<h3>Question bank status</h3>
-<p id="bankStatus" class="muted">Loading question bank…</p>
-</div>
-</section>
-
-<section id="exam" class="hidden">
-<div class="card examtop">
-<div>
-<h2 id="examTitle">Mock Test</h2>
-<div id="examMeta" class="muted small"></div>
-</div>
-<div class="timer" id="timer">180:00</div>
-</div>
-
-<div class="examgrid">
-<div class="card">
-<div class="subjecthead">
-<span class="pill" id="qSubject">Subject</span>
-<span class="pill" id="qType">MCQ</span>
-<span class="pill" id="qChapter">Chapter</span>
-</div>
-
-<div class="muted small" id="qCounter"></div>
-<div class="qtext" id="qText"></div>
-<div id="options"></div>
-
-<div id="numericArea" class="hidden">
-<label for="numericAnswer">Enter numerical answer</label>
-<input id="numericAnswer" type="number" step="any" inputmode="decimal">
-</div>
-
-<div class="row">
-<button class="secondary" onclick="previousQ()">Previous</button>
-<button class="secondary" onclick="clearResponse()">Clear response</button>
-<button onclick="saveNext()">Save & Next</button>
-</div>
-
-<button class="secondary" onclick="toggleReview()">Mark for review</button>
-</div>
-
-<aside class="card">
-<h3>Question palette</h3>
-<div id="palette" class="palette"></div>
-<p class="small muted">Green border: answered · Amber outline: marked for review</p>
-
-<div class="card">
-<div class="small muted">Answered</div>
-<b id="answeredCount">0</b> / <span id="totalCount">0</span>
-<div class="small muted" style="margin-top:8px">+4 correct · −1 incorrect · 0 unattempted</div>
-</div>
-
-<button class="danger" style="width:100%" onclick="confirmSubmit()">Submit test</button>
-</aside>
-</div>
-</section>
-
-<section id="result" class="hidden">
-<h1>Test analysis</h1>
-
-<div class="card">
-<div class="stat" id="scoreLine"></div>
-<p id="resultSubtitle" class="muted"></p>
-
-<div class="grid">
-<div>
-<div class="stat good" id="correctNum">0</div>
-<div class="muted">Correct</div>
-</div>
-<div>
-<div class="stat bad" id="wrongNum">0</div>
-<div class="muted">Incorrect</div>
-</div>
-<div>
-<div class="stat" id="skipNum">0</div>
-<div class="muted">Unattempted</div>
-</div>
-<div>
-<div class="stat" id="accuracyNum">0%</div>
-<div class="muted">Attempt accuracy</div>
-</div>
-</div>
-</div>
-
-<div class="card">
-<h2>Subject-wise scores</h2>
-<div id="subjectBreakdown"></div>
-</div>
-
-<div class="card">
-<h2>Question review</h2>
-<div id="answerReview"></div>
-</div>
-
-<button onclick="backHome()">Back to dashboard</button>
-</section>
-
-</main>
-
-<footer>RankForge · Personal practice prototype</footer>
-
-<script src="questions.js"></script>
-
-<script>
-"use strict";
-
-let testQuestions=[];
-let responses={};
-let reviewFlags=new Set();
-let current=0;
-let remaining=0;
-let timerId=null;
-let testName="";
-
-const $=id=>document.getElementById(id);
-
-function show(section){
-["home","exam","result"].forEach(x=>{
-$(x).classList.toggle("hidden",x!==section);
-});
-}
-
-function shuffle(arr){
-const a=[...arr];
-for(let i=a.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[a[i],a[j]]=[a[j],a[i]];
-}
-return a;
-}
-
-function bankFor(subject){
-return (window.RANKFORGE_QUESTIONS||[]).filter(q=>q.subject===subject);
-}
-
-function validateBank(){
-const bank=window.RANKFORGE_QUESTIONS||[];
-const counts={Mathematics:0,Physics:0,Chemistry:0};
-
-bank.forEach(q=>{
-if(counts[q.subject]!==undefined)counts[q.subject]++;
-});
-
-$("bankStatus").textContent=
-`Loaded ${bank.length} questions: Maths ${counts.Mathematics}, Physics ${counts.Physics}, Chemistry ${counts.Chemistry}.`;
-}
-
-function startSubject(subject){
-const pool=bankFor(subject);
-
-if(pool.length<25){
-alert(`${subject}: only ${pool.length} questions available. Exactly 25 are needed.`);
-return;
-}
-
-begin(shuffle(pool).slice(0,25),`${subject} Mock`,60*60);
-}
-
-function startFull(){
-const all=[];
-
-for(const subject of ["Mathematics","Physics","Chemistry"]){
-const pool=bankFor(subject);
-
-if(pool.length<25){
-alert(`${subject} has fewer than 25 questions.`);
-return;
-}
-
-all.push(...shuffle(pool).slice(0,25));
-}
-
-begin(all,"JEE Main Full-Length Mock",180*60);
-}
-
-function startCustom(){
-const subject=$("customSubject").value;
-const count=Number($("customCount").value);
-const minutes=Number($("customMinutes").value);
-
-if(!Number.isInteger(minutes)||minutes<5||minutes>180){
-alert("Choose a duration from 5 to 180 minutes.");
-return;
-}
-
-const pool=subject==="All"
-?(window.RANKFORGE_QUESTIONS||[])
-:bankFor(subject);
-
-if(pool.length<count){
-alert(`Only ${pool.length} questions available for this selection.`);
-return;
-}
-
-begin(shuffle(pool).slice(0,count),"Custom Mock",minutes*60);
-}
-
-function begin(questions,name,seconds){
-testQuestions=questions;
-testName=name;
-responses={};
-reviewFlags=new Set();
-current=0;
-remaining=seconds;
-
-$("examTitle").textContent=name;
-$("examMeta").textContent=
-`${questions.length} questions · ${Math.round(seconds/60)} minutes · +4 / −1`;
-
-$("totalCount").textContent=questions.length;
-
-show("exam");
-renderQuestion();
-startTimer();
-}
-
-function startTimer(){
-clearInterval(timerId);
-updateTimer();
-
-timerId=setInterval(()=>{
-remaining--;
-updateTimer();
-
-if(remaining<=0){
-clearInterval(timerId);
-submitTest(true);
-}
-},1000);
-}
-
-function updateTimer(){
-const h=Math.floor(remaining/3600);
-const m=Math.floor((remaining%3600)/60);
-const s=remaining%60;
-
-$("timer").textContent=h
-?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`
-:`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-}
-
-function renderQuestion(){
-const q=testQuestions[current];
-
-$("qSubject").textContent=q.subject;
-$("qType").textContent=q.type==="MCQ"?"Section A · MCQ":"Section B · Numerical";
-$("qChapter").textContent=q.chapter;
-$("qCounter").textContent=`Question ${current+1} of ${testQuestions.length}`;
-$("qText").textContent=q.question;
-
-$("options").innerHTML="";
-$("numericArea").classList.toggle("hidden",q.type!=="NUM");
-
-if(q.type==="MCQ"){
-q.options.forEach((option,i)=>{
-const label=document.createElement("label");
-label.className="option"+(responses[current]===i?" selected":"");
-
-const input=document.createElement("input");
-input.type="radio";
-input.name="answer";
-input.checked=responses[current]===i;
-
-input.addEventListener("change",()=>{
-responses[current]=i;
-renderQuestion();
-});
-
-label.append(input,document.createTextNode(option));
-$("options").append(label);
-});
-}else{
-$("numericAnswer").value=responses[current]??"";
-
-$("numericAnswer").oninput=e=>{
-const value=e.target.value;
-
-if(value===""){
-delete responses[current];
-}else{
-responses[current]=Number(value);
-}
-
-renderPalette();
-};
-}
-
-renderPalette();
-}
-
-function renderPalette(){
-const palette=$("palette");
-palette.innerHTML="";
-
-testQuestions.forEach((q,i)=>{
-const button=document.createElement("button");
-
-button.className="qbtn"+
-(responses[i]!==undefined?" answered":"")+
-(reviewFlags.has(i)?" review":"")+
-(i===current?" current":"");
-
-button.textContent=i+1;
-
-button.onclick=()=>{
-current=i;
-renderQuestion();
-};
-
-palette.append(button);
-});
-
-$("answeredCount").textContent=Object.keys(responses).length;
-}
-
-function previousQ(){
-if(current>0){
-current--;
-renderQuestion();
-}
-}
-
-function saveNext(){
-if(current<testQuestions.length-1){
-current++;
-renderQuestion();
-}else{
-alert("You are at the last question. Submit when ready.");
-}
-}
-
-function clearResponse(){
-delete responses[current];
-renderQuestion();
-}
-
-function toggleReview(){
-if(reviewFlags.has(current)){
-reviewFlags.delete(current);
-}else{
-reviewFlags.add(current);
-}
-renderPalette();
-}
-
-function confirmSubmit(){
-const unanswered=testQuestions.length-Object.keys(responses).length;
-
-if(confirm(`Submit this test? ${unanswered} question(s) are unanswered.`)){
-submitTest(false);
-}
-}
-
-function submitTest(auto){
-clearInterval(timerId);
-
-let correct=0;
-let wrong=0;
-let skip=0;
-let score=0;
-
-const bySubject={};
-
-testQuestions.forEach((q,i)=>{
-if(!bySubject[q.subject]){
-bySubject[q.subject]={
-correct:0,wrong:0,skip:0,score:0,total:0
-};
-}
-
-const subject=bySubject[q.subject];
-subject.total++;
-
-if(responses[i]===undefined){
-skip++;
-subject.skip++;
-}else if(
-(q.type==="MCQ"&&responses[i]===q.answerIndex)||
-(q.type==="NUM"&&Number(responses[i])===Number(q.answer))
-){
-correct++;
-score+=4;
-subject.correct++;
-subject.score+=4;
-}else{
-wrong++;
-score-=1;
-subject.wrong++;
-subject.score-=1;
-}
-});
-
-const max=testQuestions.length*4;
-const attempted=correct+wrong;
-const accuracy=attempted?Math.round(correct/attempted*100):0;
-
-$("scoreLine").textContent=`${score} / ${max}`;
-$("resultSubtitle").textContent=
-`${testName} · ${new Date().toLocaleString()}${auto?" · Time expired":""}`;
-
-$("correctNum").textContent=correct;
-$("wrongNum").textContent=wrong;
-$("skipNum").textContent=skip;
-$("accuracyNum").textContent=accuracy+"%";
-
-$("subjectBreakdown").innerHTML=
-Object.entries(bySubject).map(([subject,value])=>
-`<div class="reviewitem">
-<b>${escapeHTML(subject)}</b>
-<div>${value.score} / ${value.total*4} marks · ${value.correct} correct · ${value.wrong} incorrect · ${value.skip} unattempted</div>
-</div>`
-).join("");
-
-$("answerReview").innerHTML=testQuestions.map((q,i)=>{
-const user=responses[i];
-
-const ok=q.type==="MCQ"
-?user===q.answerIndex
-:user!==undefined&&Number(user)===Number(q.answer);
-
-const userText=user===undefined
-?"Not attempted"
-:q.type==="MCQ"
-?q.options[user]
-:String(user);
-
-const correctText=q.type==="MCQ"
-?q.options[q.answerIndex]
-:String(q.answer);
-
-return `<div class="reviewitem">
-<b>Q${i+1} · ${escapeHTML(q.subject)} · ${escapeHTML(q.chapter)}</b>
-<p>${escapeHTML(q.question)}</p>
-<p>Your answer: ${escapeHTML(userText)}</p>
-<p>Correct answer: ${escapeHTML(correctText)}</p>
-<p class="${user===undefined?"warn":ok?"good":"bad"}">
-${user===undefined?"Unattempted":ok?"Correct (+4)":"Incorrect (−1)"}
-</p>
-<p class="muted small">Explanation: ${escapeHTML(q.explanation||"Explanation not yet added.")}</p>
-</div>`;
-}).join("");
-
-const history=JSON.parse(localStorage.getItem("rankforge_history")||"[]");
-
-history.push({
-name:testName,
-score,
-max,
-date:new Date().toISOString(),
-correct,
-wrong,
-skip
-});
-
-localStorage.setItem(
-"rankforge_history",
-JSON.stringify(history.slice(-50))
-);
-
-show("result");
-updateDashboard();
-}
-
-function escapeHTML(value){
-return String(value).replace(/[&<>"']/g,char=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[char]));
-}
-
-function updateDashboard(){
-const history=JSON.parse(localStorage.getItem("rankforge_history")||"[]");
-
-$("testCount").textContent=history.length;
-
-$("avgScore").textContent=history.length
-?Math.round(history.reduce((sum,item)=>
-sum+item.score/item.max*100,0)/history.length)+"%"
-:"—";
-
-$("recentResults").innerHTML=history.length
-?history.slice(-3).reverse().map(item=>
-`${escapeHTML(item.name)}: <b>${item.score}/${item.max}</b>`
-).join("<br>")
-:"No tests completed yet.";
-}
-
-function backHome(){
-clearInterval(timerId);
-show("home");
-updateDashboard();
-}
-
-validateBank();
-updateDashboard();
-</script>
-
+  <div id="app">
+
+    <header class="topbar">
+      <a class="brand" href="#" data-page="dashboard">
+        RANK<span>FORGE</span>
+      </a>
+
+      <nav class="navigation">
+        <button data-page="dashboard">Dashboard</button>
+        <button data-page="practice">Practice</button>
+        <button data-page="scheduled">Scheduled Tests</button>
+        <button data-page="leaderboard">Leaderboard</button>
+      </nav>
+
+      <div class="account-area">
+        <span id="account-name">Guest</span>
+        <button id="auth-button">Sign In</button>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- DASHBOARD -->
+      <section id="page-dashboard" class="page active">
+        <div class="hero">
+          <p class="eyebrow">PRACTICE. IMPROVE. CONQUER.</p>
+          <h1>Welcome to <span>RankForge</span></h1>
+          <p>Your preparation. Your competition. Your rank.</p>
+          <button class="primary-btn" data-page="practice">
+            Start Practising
+          </button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <p>Questions Attempted</p>
+            <h2 id="stat-attempted">0</h2>
+          </article>
+          <article class="stat-card">
+            <p>Accuracy</p>
+            <h2 id="stat-accuracy">0%</h2>
+          </article>
+          <article class="stat-card">
+            <p>Tests Completed</p>
+            <h2 id="stat-tests">0</h2>
+          </article>
+          <article class="stat-card">
+            <p>Average Score</p>
+            <h2 id="stat-average">0</h2>
+          </article>
+        </div>
+
+        <div class="panel">
+          <h2>Choose Your Subject</h2>
+          <div class="subject-grid">
+            <button data-subject="Physics">Physics</button>
+            <button data-subject="Chemistry">Chemistry</button>
+            <button data-subject="Mathematics">Mathematics</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Upcoming Examinations</h2>
+          <div id="dashboard-upcoming">
+            No scheduled examinations available.
+          </div>
+        </div>
+      </section>
+
+      <!-- PRACTICE -->
+      <section id="page-practice" class="page">
+        <h1>Practice & Mock Tests</h1>
+        <p>Build a test using the RankForge question bank.</p>
+
+        <div class="panel test-builder">
+          <label for="subject-select">Subject</label>
+          <select id="subject-select">
+            <option value="All">All Subjects</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Mathematics">Mathematics</option>
+          </select>
+
+          <label for="chapter-select">Chapter</label>
+          <select id="chapter-select">
+            <option value="All">All Chapters</option>
+          </select>
+
+          <label for="difficulty-select">Difficulty</label>
+          <select id="difficulty-select">
+            <option value="Main">JEE Main</option>
+            <option value="Above Main">Above JEE Main</option>
+            <option value="Both">Mixed Difficulty</option>
+          </select>
+
+          <label for="type-select">Question Type</label>
+          <select id="type-select">
+            <option value="Both">MCQ + Numerical</option>
+            <option value="MCQ">MCQ</option>
+            <option value="Numerical">Numerical</option>
+          </select>
+
+          <label for="question-count">Number of Questions</label>
+          <select id="question-count">
+            <option value="10">10 Questions</option>
+            <option value="25">25 Questions</option>
+            <option value="50">50 Questions</option>
+            <option value="75">75 Questions</option>
+          </select>
+
+          <label for="test-duration">Duration</label>
+          <select id="test-duration">
+            <option value="30">30 Minutes</option>
+            <option value="60">60 Minutes</option>
+            <option value="90">90 Minutes</option>
+            <option value="180">180 Minutes</option>
+          </select>
+
+          <button id="generate-test" class="primary-btn">
+            Generate Practice Test
+          </button>
+        </div>
+
+        <div id="test-interface" class="panel hidden">
+          <div class="test-topline">
+            <span id="test-progress">Question 1</span>
+            <span id="test-timer">00:00</span>
+          </div>
+
+          <div class="question-area">
+            <div id="question-metadata"></div>
+            <h2 id="question-text">Question will appear here.</h2>
+            <div id="question-options"></div>
+          </div>
+
+          <div class="test-controls">
+            <button id="mark-review">Mark for Review</button>
+            <button id="previous-question">Previous</button>
+            <button id="next-question">Next</button>
+            <button id="submit-test" class="primary-btn">
+              Submit Test
+            </button>
+          </div>
+        </div>
+
+        <div id="test-results" class="panel hidden">
+          <h2>Test Results</h2>
+          <div id="results-content"></div>
+        </div>
+      </section>
+
+      <!-- SCHEDULED TESTS -->
+      <section id="page-scheduled" class="page">
+        <h1>Scheduled Examinations</h1>
+        <p>Participate in examinations during their official time window.</p>
+
+        <div id="admin-schedule-area" class="panel hidden">
+          <h2>Create Scheduled Test</h2>
+
+          <label for="schedule-title">Examination Name</label>
+          <input id="schedule-title" type="text"
+                 placeholder="Example: Sunday JEE Mock">
+
+          <label for="schedule-date">Examination Date</label>
+          <input id="schedule-date" type="date">
+
+          <label for="schedule-start">Start Time</label>
+          <input id="schedule-start" type="time">
+
+          <label for="schedule-end">End Time</label>
+          <input id="schedule-end" type="time">
+
+          <label for="schedule-questions">Number of Questions</label>
+          <select id="schedule-questions">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="75">75</option>
+          </select>
+
+          <button id="create-scheduled-test" class="primary-btn">
+            Schedule Examination
+          </button>
+        </div>
+
+        <div class="panel">
+          <h2>Available Examinations</h2>
+          <div id="scheduled-test-list">
+            Loading scheduled examinations...
+          </div>
+        </div>
+      </section>
+
+      <!-- LEADERBOARD -->
+      <section id="page-leaderboard" class="page">
+        <h1>Leaderboard</h1>
+
+        <div class="panel">
+          <div id="leaderboard-list">
+            Leaderboard will appear here.
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTHENTICATION -->
+      <div id="auth-modal" class="modal hidden">
+        <div class="modal-content">
+          <button id="close-auth" class="close-btn">×</button>
+          <h2>RankForge Account</h2>
+
+          <label for="auth-email">Email</label>
+          <input id="auth-email" type="email" placeholder="Email address">
+
+          <label for="auth-password">Password</label>
+          <input id="auth-password" type="password"
+                 placeholder="Password">
+
+          <button id="login-button" class="primary-btn">Sign In</button>
+          <button id="signup-button">Create Account</button>
+
+          <p id="auth-message"></p>
+        </div>
+      </div>
+
+    </main>
+
+    <footer>
+      <p>RANKFORGE © 2026</p>
+      <p>PRACTICE. IMPROVE. CONQUER.</p>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
 </body>
 </html>
