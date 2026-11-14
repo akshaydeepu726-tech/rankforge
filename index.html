@@ -1,618 +1,651 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RankForge | JEE Mock Platform</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RankForge | JEE Main Mock Platform</title>
 <style>
-:root {
-  --bg:#080d19;
-  --panel:#111a2d;
-  --panel2:#17233a;
-  --text:#f2f5ff;
-  --muted:#9ba9c2;
-  --blue:#527cff;
-  --green:#20c997;
-  --red:#ff6577;
-  --border:#26344e;
-}
-* {box-sizing:border-box}
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-}
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 6%;
-  border-bottom:1px solid var(--border);
-}
-.logo {font-size:23px;font-weight:900}
-.logo span {color:var(--blue)}
-main {max-width:1100px;margin:35px auto;padding:0 18px}
-h1 {font-size:32px;margin-bottom:8px}
-p {color:var(--muted);line-height:1.6}
-.card {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:22px;
-  margin:15px 0;
-}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-}
-.stat {font-size:28px;font-weight:bold;margin-top:12px}
-button {
-  border:0;
-  background:var(--blue);
-  color:white;
-  padding:12px 19px;
-  border-radius:9px;
-  font-weight:bold;
-  cursor:pointer;
-  margin:5px 3px;
-}
-button:hover {filter:brightness(1.15)}
-.secondary {background:var(--panel2);border:1px solid var(--border)}
-.danger {background:#a7354b}
-input,select {
-  background:var(--bg);
-  border:1px solid var(--border);
-  border-radius:8px;
-  color:white;
-  padding:12px;
-  width:100%;
-  margin:8px 0 16px;
-}
-label {font-size:14px;color:var(--muted)}
-.hidden {display:none!important}
-.nav {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:20px 0;
-}
-.nav button {background:var(--panel2)}
-.nav button.active {background:var(--blue)}
-.question {
-  font-size:20px;
-  line-height:1.6;
-  margin:20px 0;
-}
-.option {
-  display:block;
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  margin:10px 0;
-  cursor:pointer;
-}
-.option.selected {border-color:var(--blue);background:#192c50}
-.option input {width:auto;margin:0 10px 0 0}
-.timer {font-size:23px;font-weight:bold;color:var(--green)}
-#questionGrid {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:7px;
-}
-.qnum {
-  background:var(--panel2);
-  padding:12px 4px;
-  border-radius:7px;
-}
-.correct {color:var(--green)}
-.wrong {color:var(--red)}
-footer {
-  text-align:center;
-  padding:35px;
-  color:var(--muted);
+:root{--bg:#080d19;--panel:#111a2d;--panel2:#192640;--line:#293955;--text:#f4f7ff;--muted:#a8b5ca;--blue:#6287ff;--green:#2bd39a;--red:#ff7184;--amber:#ffc66b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Arial,sans-serif}
+header{padding:17px max(18px,calc((100% - 1120px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:15px}
+.logo{font-weight:900;font-size:23px;letter-spacing:.5px}
+.logo span{color:var(--blue)}
+main{max-width:1120px;margin:30px auto;padding:0 18px}
+.muted{color:var(--muted)}
+h1{font-size:30px;margin:8px 0}
+h2{font-size:21px;margin:0 0 12px}
+h3{margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:19px;margin:13px 0}
+button{border:0;border-radius:9px;padding:11px 16px;background:var(--blue);color:white;font-weight:700;cursor:pointer;margin:4px 3px}
+button:hover{filter:brightness(1.12)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.secondary{background:var(--panel2);border:1px solid var(--line)}
+.danger{background:#a63d50}
+input,select{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:#0b1323;color:var(--text);margin:5px 0 14px}
+label{color:var(--muted);font-size:13px}
+.hidden{display:none!important}
+.stat{font-size:27px;font-weight:800}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:4px 10px;color:var(--muted);font-size:12px}
+.examtop{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.timer{font-size:24px;font-weight:800;color:var(--green);font-variant-numeric:tabular-nums}
+.examgrid{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:14px}
+.qtext{font-size:19px;line-height:1.6;margin:20px 0}
+.option{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:9px;margin:9px 0;cursor:pointer}
+.option input{width:auto;margin:3px 0 0}
+.option.selected{border-color:var(--blue);background:#17284b}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.qbtn{margin:0;padding:10px 2px;background:var(--panel2);border:1px solid var(--line)}
+.qbtn.answered{border-color:var(--green)}
+.qbtn.review{outline:2px solid var(--amber)}
+.qbtn.current{background:var(--blue)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>*{flex:1}
+.subjecthead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.reviewitem{padding:13px;border:1px solid var(--line);border-radius:10px;margin:10px 0}
+.good{color:var(--green)}
+.bad{color:var(--red)}
+.warn{color:var(--amber)}
+.small{font-size:13px}
+.right{text-align:right}
+footer{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:760px){
+.examgrid{grid-template-columns:1fr}
+.palette{grid-template-columns:repeat(8,1fr)}
+header{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">RANK<span>FORGE</span></div>
-  <div id="userDisplay">JEE MOCK PLATFORM</div>
+<div class="logo">RANK<span>FORGE</span></div>
+<div class="muted">PRACTICE. IMPROVE. CONQUER.</div>
 </header>
 
 <main>
 
-<!-- HOME -->
 <section id="home">
-  <h1>Practice. Improve. Conquer.</h1>
-  <p>Your personal JEE preparation platform.</p>
+<h1>Your JEE preparation arena.</h1>
+<p class="muted">Practice mocks, track your performance and improve through detailed analysis. This prototype currently saves results on this device only.</p>
 
-  <div class="grid">
-    <div class="card">
-      <h3>Full-Length Mock</h3>
-      <p>75 Questions · 300 Marks · 3 Hours</p>
-      <button onclick="openSetup('full')">Start Full Mock</button>
-    </div>
+<div class="grid">
+<div class="card">
+<span class="pill">25 questions · 100 marks</span>
+<h2>Mathematics</h2>
+<p class="muted">20 MCQs + 5 numerical</p>
+<button onclick="startSubject('Mathematics')">Start Maths</button>
+</div>
 
-    <div class="card">
-      <h3>Subject Mocks</h3>
-      <p>Individual subject examinations.</p>
-      <button onclick="openSetup('subject')">Choose Subject</button>
-    </div>
+<div class="card">
+<span class="pill">25 questions · 100 marks</span>
+<h2>Physics</h2>
+<p class="muted">20 MCQs + 5 numerical</p>
+<button onclick="startSubject('Physics')">Start Physics</button>
+</div>
 
-    <div class="card">
-      <h3>Custom Mock</h3>
-      <p>Create your own examination.</p>
-      <button onclick="openSetup('custom')">Create Mock</button>
-    </div>
+<div class="card">
+<span class="pill">25 questions · 100 marks</span>
+<h2>Chemistry</h2>
+<p class="muted">20 MCQs + 5 numerical</p>
+<button onclick="startSubject('Chemistry')">Start Chemistry</button>
+</div>
 
-    <div class="card">
-      <h3>Practice Zone</h3>
-      <p>Practice individual questions.</p>
-      <button onclick="openSetup('practice')">Start Practice</button>
-    </div>
-  </div>
+<div class="card">
+<span class="pill">75 questions · 300 marks</span>
+<h2>Full-length mock</h2>
+<p class="muted">3 hours · all three subjects</p>
+<button onclick="startFull()">Start Full Mock</button>
+</div>
+</div>
 
-  <div class="grid">
-    <div class="card">
-      <h3>My Performance</h3>
-      <div class="stat" id="totalTests">0</div>
-      <p>Tests completed on this browser</p>
-    </div>
-    <div class="card">
-      <h3>Average Score</h3>
-      <div class="stat" id="averageScore">0</div>
-      <p>Across completed tests</p>
-    </div>
-    <div class="card">
-      <h3>Leaderboard</h3>
-      <p>Local demo leaderboard</p>
-      <button onclick="showLeaderboard()">View Leaderboard</button>
-    </div>
-  </div>
+<div class="card">
+<h2>Custom mock</h2>
+<div class="grid">
+<div>
+<label>Subject</label>
+<select id="customSubject">
+<option value="All">All subjects</option>
+<option>Mathematics</option>
+<option>Physics</option>
+<option>Chemistry</option>
+</select>
+</div>
+<div>
+<label>Question count</label>
+<select id="customCount">
+<option>5</option>
+<option selected>10</option>
+<option>15</option>
+<option>20</option>
+<option>25</option>
+</select>
+</div>
+<div>
+<label>Duration (minutes)</label>
+<input id="customMinutes" type="number" min="5" max="180" value="30">
+</div>
+</div>
+<button onclick="startCustom()">Create custom mock</button>
+</div>
+
+<div class="grid">
+<div class="card">
+<h3>Tests completed</h3>
+<div class="stat" id="testCount">0</div>
+</div>
+<div class="card">
+<h3>Average score</h3>
+<div class="stat" id="avgScore">—</div>
+<p class="muted small">Percentage of available marks</p>
+</div>
+<div class="card">
+<h3>Recent results</h3>
+<div id="recentResults" class="muted small">No tests completed yet.</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Question bank status</h3>
+<p id="bankStatus" class="muted">Loading question bank…</p>
+</div>
 </section>
 
-<!-- SETUP -->
-<section id="setup" class="hidden">
-  <button class="secondary" onclick="goHome()">← Back</button>
-  <h1 id="setupTitle">Configure Examination</h1>
-
-  <div class="card">
-    <label>Examination name</label>
-    <input id="examName" value="RankForge Mock">
-
-    <div id="subjectField">
-      <label>Subject</label>
-      <select id="subject">
-        <option>Mathematics</option>
-        <option>Physics</option>
-        <option>Chemistry</option>
-      </select>
-    </div>
-
-    <div id="customSubjects" class="hidden">
-      <label>Number of questions</label>
-      <select id="questionCount">
-        <option value="5">5 Questions</option>
-        <option value="10" selected>10 Questions</option>
-        <option value="15">15 Questions</option>
-      </select>
-      <label>Duration (minutes)</label>
-      <input id="duration" type="number" min="1" max="180" value="30">
-      <label>Subject combination</label>
-      <select id="combination">
-        <option value="all">All Subjects</option>
-        <option value="Maths">Mathematics</option>
-        <option value="Physics">Physics</option>
-        <option value="Chemistry">Chemistry</option>
-        <option value="Maths,Physics">Maths + Physics</option>
-        <option value="Physics,Chemistry">Physics + Chemistry</option>
-        <option value="Maths,Chemistry">Maths + Chemistry</option>
-      </select>
-    </div>
-
-    <p id="setupInfo"></p>
-    <button onclick="beginTest()">Continue</button>
-  </div>
-</section>
-
-<!-- EXAM -->
 <section id="exam" class="hidden">
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;flex-wrap:wrap">
-      <div>
-        <b id="examHeading">Mock Test</b>
-        <p id="examSubject"></p>
-      </div>
-      <div class="timer" id="timer">00:00</div>
-    </div>
-  </div>
+<div class="card examtop">
+<div>
+<h2 id="examTitle">Mock Test</h2>
+<div id="examMeta" class="muted small"></div>
+</div>
+<div class="timer" id="timer">180:00</div>
+</div>
 
-  <div class="grid" style="grid-template-columns:2fr 1fr">
-    <div class="card">
-      <p id="questionLabel">Question 1</p>
-      <div class="question" id="questionText"></div>
-      <div id="options"></div>
+<div class="examgrid">
+<div class="card">
+<div class="subjecthead">
+<span class="pill" id="qSubject">Subject</span>
+<span class="pill" id="qType">MCQ</span>
+<span class="pill" id="qChapter">Chapter</span>
+</div>
 
-      <button class="secondary" onclick="previousQuestion()">Previous</button>
-      <button onclick="saveNext()">Save & Next</button>
-      <button class="secondary" onclick="clearAnswer()">Clear</button>
-    </div>
+<div class="muted small" id="qCounter"></div>
+<div class="qtext" id="qText"></div>
+<div id="options"></div>
 
-    <div class="card">
-      <h3>Question Navigator</h3>
-      <div id="questionGrid"></div>
-      <p>+4 Correct | -1 Incorrect</p>
-      <button class="danger" onclick="submitTest()">Submit Test</button>
-    </div>
-  </div>
+<div id="numericArea" class="hidden">
+<label for="numericAnswer">Enter numerical answer</label>
+<input id="numericAnswer" type="number" step="any" inputmode="decimal">
+</div>
+
+<div class="row">
+<button class="secondary" onclick="previousQ()">Previous</button>
+<button class="secondary" onclick="clearResponse()">Clear response</button>
+<button onclick="saveNext()">Save & Next</button>
+</div>
+
+<button class="secondary" onclick="toggleReview()">Mark for review</button>
+</div>
+
+<aside class="card">
+<h3>Question palette</h3>
+<div id="palette" class="palette"></div>
+<p class="small muted">Green border: answered · Amber outline: marked for review</p>
+
+<div class="card">
+<div class="small muted">Answered</div>
+<b id="answeredCount">0</b> / <span id="totalCount">0</span>
+<div class="small muted" style="margin-top:8px">+4 correct · −1 incorrect · 0 unattempted</div>
+</div>
+
+<button class="danger" style="width:100%" onclick="confirmSubmit()">Submit test</button>
+</aside>
+</div>
 </section>
 
-<!-- RESULTS -->
-<section id="results" class="hidden">
-  <h1>Examination Result</h1>
-  <div class="card">
-    <div class="stat" id="finalScore">0 / 0</div>
-    <p id="resultName"></p>
-    <div class="grid">
-      <div><h3 class="correct" id="correctCount">0</h3><p>Correct</p></div>
-      <div><h3 class="wrong" id="wrongCount">0</h3><p>Incorrect</p></div>
-      <div><h3 id="skipCount">0</h3><p>Unattempted</p></div>
-      <div><h3 id="accuracy">0%</h3><p>Accuracy</p></div>
-    </div>
-  </div>
+<section id="result" class="hidden">
+<h1>Test analysis</h1>
 
-  <div class="card">
-    <h3>Question-wise Analysis</h3>
-    <div id="analysis"></div>
-  </div>
+<div class="card">
+<div class="stat" id="scoreLine"></div>
+<p id="resultSubtitle" class="muted"></p>
 
-  <button onclick="goHome()">Return to Dashboard</button>
-</section>
+<div class="grid">
+<div>
+<div class="stat good" id="correctNum">0</div>
+<div class="muted">Correct</div>
+</div>
+<div>
+<div class="stat bad" id="wrongNum">0</div>
+<div class="muted">Incorrect</div>
+</div>
+<div>
+<div class="stat" id="skipNum">0</div>
+<div class="muted">Unattempted</div>
+</div>
+<div>
+<div class="stat" id="accuracyNum">0%</div>
+<div class="muted">Attempt accuracy</div>
+</div>
+</div>
+</div>
 
-<!-- LEADERBOARD -->
-<section id="leaderboard" class="hidden">
-  <button class="secondary" onclick="goHome()">← Back</button>
-  <h1>Leaderboard</h1>
-  <div class="card" id="leaderboardContent"></div>
+<div class="card">
+<h2>Subject-wise scores</h2>
+<div id="subjectBreakdown"></div>
+</div>
+
+<div class="card">
+<h2>Question review</h2>
+<div id="answerReview"></div>
+</div>
+
+<button onclick="backHome()">Back to dashboard</button>
 </section>
 
 </main>
 
-<footer>RANKFORGE © 2026 · PRACTICE. IMPROVE. CONQUER.</footer>
+<footer>RankForge · Personal practice prototype</footer>
+
+<script src="questions.js"></script>
 
 <script>
+"use strict";
 
-// DEMO QUESTION BANK
-// Add more verified JEE questions as the question bank grows.
-
-const bank = [
-{
- subject:"Chemistry",
- topic:"Atomic Structure",
- q:"The maximum number of electrons in an orbital is:",
- options:["1","2","4","8"],
- answer:1
-},
-{
- subject:"Chemistry",
- topic:"Atomic Structure",
- q:"The number of orbitals in the third shell is:",
- options:["3","5","9","18"],
- answer:2
-},
-{
- subject:"Chemistry",
- topic:"Periodic Table",
- q:"Which element exhibits the strongest inert pair effect among these?",
- options:["C","Si","Sn","Pb"],
- answer:3
-},
-{
- subject:"Chemistry",
- topic:"Group 13",
- q:"The geometry of BF3 is:",
- options:["Tetrahedral","Trigonal planar","Pyramidal","Linear"],
- answer:1
-},
-{
- subject:"Physics",
- topic:"Electrostatics",
- q:"The SI unit of electric field is:",
- options:["N/C","J/C","C/N","N m"],
- answer:0
-},
-{
- subject:"Physics",
- topic:"Current Electricity",
- q:"The resistance of a conductor is directly proportional to:",
- options:["Area","Length","Conductivity","Current"],
- answer:1
-},
-{
- subject:"Physics",
- topic:"Capacitors",
- q:"The energy stored in a capacitor is:",
- options:["CV","CV²/2","C²V","2CV²"],
- answer:1
-},
-{
- subject:"Physics",
- topic:"Modern Physics",
- q:"The energy of a photon is:",
- options:["hν","h/ν","ν/h","mc"],
- answer:0
-},
-{
- subject:"Mathematics",
- topic:"Integration",
- q:"The integral of 2x dx is:",
- options:["x²+C","2x²+C","x+C","x³+C"],
- answer:0
-},
-{
- subject:"Mathematics",
- topic:"Differentiation",
- q:"The derivative of sin x is:",
- options:["-cos x","cos x","tan x","-sin x"],
- answer:1
-},
-{
- subject:"Mathematics",
- topic:"Probability",
- q:"The probability of an impossible event is:",
- options:["0","1","1/2","-1"],
- answer:0
-},
-{
- subject:"Mathematics",
- topic:"Matrices",
- q:"The determinant of an identity matrix of order 2 is:",
- options:["0","1","2","-1"],
- answer:1
-}
-];
-
-let mode="";
-let questions=[];
-let answers={};
+let testQuestions=[];
+let responses={};
+let reviewFlags=new Set();
 let current=0;
-let seconds=0;
-let interval=null;
-let submitted=false;
+let remaining=0;
+let timerId=null;
+let testName="";
 
-function show(id) {
- ["home","setup","exam","results","leaderboard"].forEach(x=>{
-  document.getElementById(x).classList.add("hidden");
- });
- document.getElementById(id).classList.remove("hidden");
+const $=id=>document.getElementById(id);
+
+function show(section){
+["home","exam","result"].forEach(x=>{
+$(x).classList.toggle("hidden",x!==section);
+});
 }
 
-function goHome() {
- clearInterval(interval);
- updateStats();
- show("home");
+function shuffle(arr){
+const a=[...arr];
+for(let i=a.length-1;i>0;i--){
+const j=Math.floor(Math.random()*(i+1));
+[a[i],a[j]]=[a[j],a[i]];
+}
+return a;
 }
 
-function openSetup(type) {
- mode=type;
- show("setup");
-
- document.getElementById("subjectField").classList.toggle("hidden",type==="full"||type==="custom");
- document.getElementById("customSubjects").classList.toggle("hidden",type!=="custom");
-
- document.getElementById("setupTitle").textContent=
-  type==="full"?"Full-Length Mock":
-  type==="subject"?"Subject Mock":
-  type==="practice"?"Practice Zone":"Custom Mock";
-
- document.getElementById("setupInfo").textContent=
-  type==="full"?"75 questions, 300 marks, 180 minutes. Demo bank currently contains fewer questions.":
-  type==="practice"?"Practice questions from the available question bank.":
-  "Choose your preferred examination settings.";
+function bankFor(subject){
+return (window.RANKFORGE_QUESTIONS||[]).filter(q=>q.subject===subject);
 }
 
-function beginTest() {
- let pool=[...bank];
+function validateBank(){
+const bank=window.RANKFORGE_QUESTIONS||[];
+const counts={Mathematics:0,Physics:0,Chemistry:0};
 
- if(mode==="subject") {
-  const s=document.getElementById("subject").value;
-  pool=pool.filter(q=>q.subject===s);
- }
+bank.forEach(q=>{
+if(counts[q.subject]!==undefined)counts[q.subject]++;
+});
 
- if(mode==="custom") {
-  const combo=document.getElementById("combination").value;
-  if(combo!=="all") {
-   const subjects=combo.split(",");
-   pool=pool.filter(q=>subjects.includes(
-    q.subject==="Mathematics"?"Maths":q.subject
-   ));
-  }
- }
-
- const requested=mode==="full"?75:
-  mode==="practice"?5:
-  mode==="subject"?pool.length:
-  Number(document.getElementById("questionCount").value);
-
- if(pool.length===0) {
-  alert("No questions available for this selection yet.");
-  return;
- }
-
- questions=pool.sort(()=>Math.random()-.5).slice(0,requested);
- answers={};
- current=0;
- submitted=false;
-
- seconds=mode==="full"?10800:
-  mode==="practice"?600:
-  mode==="subject"?Math.max(600,questions.length*120):
-  Number(document.getElementById("duration").value)*60;
-
- document.getElementById("examHeading").textContent=
-  document.getElementById("examName").value||"RankForge Mock";
-
- show("exam");
- renderQuestion();
- renderGrid();
- startTimer();
+$("bankStatus").textContent=
+`Loaded ${bank.length} questions: Maths ${counts.Mathematics}, Physics ${counts.Physics}, Chemistry ${counts.Chemistry}.`;
 }
 
-function startTimer() {
- clearInterval(interval);
- updateTimer();
+function startSubject(subject){
+const pool=bankFor(subject);
 
- interval=setInterval(()=>{
-  seconds--;
-  updateTimer();
-  if(seconds<=0) submitTest();
- },1000);
+if(pool.length<25){
+alert(`${subject}: only ${pool.length} questions available. Exactly 25 are needed.`);
+return;
 }
 
-function updateTimer() {
- const m=Math.floor(seconds/60);
- const s=seconds%60;
- document.getElementById("timer").textContent=
-  String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+begin(shuffle(pool).slice(0,25),`${subject} Mock`,60*60);
 }
 
-function renderQuestion() {
- const q=questions[current];
- document.getElementById("questionLabel").textContent=
-  `Question ${current+1} of ${questions.length}`;
- document.getElementById("examSubject").textContent=
-  q.subject+" · "+q.topic;
- document.getElementById("questionText").textContent=q.q;
+function startFull(){
+const all=[];
 
- document.getElementById("options").innerHTML="";
+for(const subject of ["Mathematics","Physics","Chemistry"]){
+const pool=bankFor(subject);
 
- q.options.forEach((option,i)=>{
-  const label=document.createElement("label");
-  label.className="option"+(answers[current]===i?" selected":"");
-  const radio=document.createElement("input");
-  radio.type="radio";
-  radio.checked=answers[current]===i;
-  radio.name="answer";
-  radio.onchange=()=> {
-   answers[current]=i;
-   renderQuestion();
-   renderGrid();
-  };
-  label.append(radio,document.createTextNode(option));
-  document.getElementById("options").append(label);
- });
+if(pool.length<25){
+alert(`${subject} has fewer than 25 questions.`);
+return;
 }
 
-function renderGrid() {
- const grid=document.getElementById("questionGrid");
- grid.innerHTML="";
- questions.forEach((q,i)=>{
-  const b=document.createElement("button");
-  b.className="qnum secondary";
-  b.textContent=i+1;
-  if(answers[i]!==undefined)b.style.borderColor="var(--green)";
-  b.onclick=()=>{current=i;renderQuestion();};
-  grid.append(b);
- });
+all.push(...shuffle(pool).slice(0,25));
 }
 
-function previousQuestion() {
- if(current>0){current--;renderQuestion();}
+begin(all,"JEE Main Full-Length Mock",180*60);
 }
 
-function saveNext() {
- if(current<questions.length-1){current++;renderQuestion();}
- else alert("You are at the last question. Submit when ready.");
- renderGrid();
+function startCustom(){
+const subject=$("customSubject").value;
+const count=Number($("customCount").value);
+const minutes=Number($("customMinutes").value);
+
+if(!Number.isInteger(minutes)||minutes<5||minutes>180){
+alert("Choose a duration from 5 to 180 minutes.");
+return;
 }
 
-function clearAnswer() {
- delete answers[current];
- renderQuestion();
- renderGrid();
+const pool=subject==="All"
+?(window.RANKFORGE_QUESTIONS||[])
+:bankFor(subject);
+
+if(pool.length<count){
+alert(`Only ${pool.length} questions available for this selection.`);
+return;
 }
 
-function submitTest() {
- if(submitted)return;
- if(!confirm("Are you sure you want to submit this test?"))return;
-
- submitted=true;
- clearInterval(interval);
-
- let correct=0,wrong=0,skip=0,score=0;
-
- questions.forEach((q,i)=>{
-  if(answers[i]===undefined)skip++;
-  else if(answers[i]===q.answer){correct++;score+=4;}
-  else {wrong++;score-=1;}
- });
-
- const accuracy=correct+wrong===0?0:
-  Math.round(correct/(correct+wrong)*100);
-
- const result={
-  name:document.getElementById("examHeading").textContent,
-  score,correct,wrong,skip,accuracy,
-  total:questions.length,
-  date:new Date().toLocaleString()
- };
-
- const history=JSON.parse(localStorage.getItem("rf_history")||"[]");
- history.push(result);
- localStorage.setItem("rf_history",JSON.stringify(history));
-
- document.getElementById("finalScore").textContent=
-  score+" / "+(questions.length*4);
- document.getElementById("resultName").textContent=result.name;
- document.getElementById("correctCount").textContent=correct;
- document.getElementById("wrongCount").textContent=wrong;
- document.getElementById("skipCount").textContent=skip;
- document.getElementById("accuracy").textContent=accuracy+"%";
-
- document.getElementById("analysis").innerHTML=questions.map((q,i)=>{
-  const a=answers[i];
-  const status=a===undefined?"Unattempted":
-   a===q.answer?"Correct":"Incorrect";
-  return `<div class="card">
-   <b>Q${i+1}. ${q.topic}</b>
-   <p>${q.q}</p>
-   <p>Your answer: ${a===undefined?"Not attempted":q.options[a]}</p>
-   <p>Correct answer: ${q.options[q.answer]}</p>
-   <b>${status}</b>
-  </div>`;
- }).join("");
-
- show("results");
- updateStats();
+begin(shuffle(pool).slice(0,count),"Custom Mock",minutes*60);
 }
 
-function updateStats() {
- const h=JSON.parse(localStorage.getItem("rf_history")||"[]");
- document.getElementById("totalTests").textContent=h.length;
- const avg=h.length?
-  Math.round(h.reduce((s,x)=>s+x.score,0)/h.length):0;
- document.getElementById("averageScore").textContent=avg;
+function begin(questions,name,seconds){
+testQuestions=questions;
+testName=name;
+responses={};
+reviewFlags=new Set();
+current=0;
+remaining=seconds;
+
+$("examTitle").textContent=name;
+$("examMeta").textContent=
+`${questions.length} questions · ${Math.round(seconds/60)} minutes · +4 / −1`;
+
+$("totalCount").textContent=questions.length;
+
+show("exam");
+renderQuestion();
+startTimer();
 }
 
-function showLeaderboard() {
- const h=JSON.parse(localStorage.getItem("rf_history")||"[]");
- const sorted=[...h].sort((a,b)=>b.score-a.score);
+function startTimer(){
+clearInterval(timerId);
+updateTimer();
 
- document.getElementById("leaderboardContent").innerHTML=
-  sorted.length?sorted.map((x,i)=>
-   `<p>#${i+1} — ${x.name}: <b>${x.score}</b></p>`
-  ).join(""):"No test results yet.";
+timerId=setInterval(()=>{
+remaining--;
+updateTimer();
 
- show("leaderboard");
+if(remaining<=0){
+clearInterval(timerId);
+submitTest(true);
+}
+},1000);
 }
 
-updateStats();
+function updateTimer(){
+const h=Math.floor(remaining/3600);
+const m=Math.floor((remaining%3600)/60);
+const s=remaining%60;
 
+$("timer").textContent=h
+?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`
+:`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+function renderQuestion(){
+const q=testQuestions[current];
+
+$("qSubject").textContent=q.subject;
+$("qType").textContent=q.type==="MCQ"?"Section A · MCQ":"Section B · Numerical";
+$("qChapter").textContent=q.chapter;
+$("qCounter").textContent=`Question ${current+1} of ${testQuestions.length}`;
+$("qText").textContent=q.question;
+
+$("options").innerHTML="";
+$("numericArea").classList.toggle("hidden",q.type!=="NUM");
+
+if(q.type==="MCQ"){
+q.options.forEach((option,i)=>{
+const label=document.createElement("label");
+label.className="option"+(responses[current]===i?" selected":"");
+
+const input=document.createElement("input");
+input.type="radio";
+input.name="answer";
+input.checked=responses[current]===i;
+
+input.addEventListener("change",()=>{
+responses[current]=i;
+renderQuestion();
+});
+
+label.append(input,document.createTextNode(option));
+$("options").append(label);
+});
+}else{
+$("numericAnswer").value=responses[current]??"";
+
+$("numericAnswer").oninput=e=>{
+const value=e.target.value;
+
+if(value===""){
+delete responses[current];
+}else{
+responses[current]=Number(value);
+}
+
+renderPalette();
+};
+}
+
+renderPalette();
+}
+
+function renderPalette(){
+const palette=$("palette");
+palette.innerHTML="";
+
+testQuestions.forEach((q,i)=>{
+const button=document.createElement("button");
+
+button.className="qbtn"+
+(responses[i]!==undefined?" answered":"")+
+(reviewFlags.has(i)?" review":"")+
+(i===current?" current":"");
+
+button.textContent=i+1;
+
+button.onclick=()=>{
+current=i;
+renderQuestion();
+};
+
+palette.append(button);
+});
+
+$("answeredCount").textContent=Object.keys(responses).length;
+}
+
+function previousQ(){
+if(current>0){
+current--;
+renderQuestion();
+}
+}
+
+function saveNext(){
+if(current<testQuestions.length-1){
+current++;
+renderQuestion();
+}else{
+alert("You are at the last question. Submit when ready.");
+}
+}
+
+function clearResponse(){
+delete responses[current];
+renderQuestion();
+}
+
+function toggleReview(){
+if(reviewFlags.has(current)){
+reviewFlags.delete(current);
+}else{
+reviewFlags.add(current);
+}
+renderPalette();
+}
+
+function confirmSubmit(){
+const unanswered=testQuestions.length-Object.keys(responses).length;
+
+if(confirm(`Submit this test? ${unanswered} question(s) are unanswered.`)){
+submitTest(false);
+}
+}
+
+function submitTest(auto){
+clearInterval(timerId);
+
+let correct=0;
+let wrong=0;
+let skip=0;
+let score=0;
+
+const bySubject={};
+
+testQuestions.forEach((q,i)=>{
+if(!bySubject[q.subject]){
+bySubject[q.subject]={
+correct:0,wrong:0,skip:0,score:0,total:0
+};
+}
+
+const subject=bySubject[q.subject];
+subject.total++;
+
+if(responses[i]===undefined){
+skip++;
+subject.skip++;
+}else if(
+(q.type==="MCQ"&&responses[i]===q.answerIndex)||
+(q.type==="NUM"&&Number(responses[i])===Number(q.answer))
+){
+correct++;
+score+=4;
+subject.correct++;
+subject.score+=4;
+}else{
+wrong++;
+score-=1;
+subject.wrong++;
+subject.score-=1;
+}
+});
+
+const max=testQuestions.length*4;
+const attempted=correct+wrong;
+const accuracy=attempted?Math.round(correct/attempted*100):0;
+
+$("scoreLine").textContent=`${score} / ${max}`;
+$("resultSubtitle").textContent=
+`${testName} · ${new Date().toLocaleString()}${auto?" · Time expired":""}`;
+
+$("correctNum").textContent=correct;
+$("wrongNum").textContent=wrong;
+$("skipNum").textContent=skip;
+$("accuracyNum").textContent=accuracy+"%";
+
+$("subjectBreakdown").innerHTML=
+Object.entries(bySubject).map(([subject,value])=>
+`<div class="reviewitem">
+<b>${escapeHTML(subject)}</b>
+<div>${value.score} / ${value.total*4} marks · ${value.correct} correct · ${value.wrong} incorrect · ${value.skip} unattempted</div>
+</div>`
+).join("");
+
+$("answerReview").innerHTML=testQuestions.map((q,i)=>{
+const user=responses[i];
+
+const ok=q.type==="MCQ"
+?user===q.answerIndex
+:user!==undefined&&Number(user)===Number(q.answer);
+
+const userText=user===undefined
+?"Not attempted"
+:q.type==="MCQ"
+?q.options[user]
+:String(user);
+
+const correctText=q.type==="MCQ"
+?q.options[q.answerIndex]
+:String(q.answer);
+
+return `<div class="reviewitem">
+<b>Q${i+1} · ${escapeHTML(q.subject)} · ${escapeHTML(q.chapter)}</b>
+<p>${escapeHTML(q.question)}</p>
+<p>Your answer: ${escapeHTML(userText)}</p>
+<p>Correct answer: ${escapeHTML(correctText)}</p>
+<p class="${user===undefined?"warn":ok?"good":"bad"}">
+${user===undefined?"Unattempted":ok?"Correct (+4)":"Incorrect (−1)"}
+</p>
+<p class="muted small">Explanation: ${escapeHTML(q.explanation||"Explanation not yet added.")}</p>
+</div>`;
+}).join("");
+
+const history=JSON.parse(localStorage.getItem("rankforge_history")||"[]");
+
+history.push({
+name:testName,
+score,
+max,
+date:new Date().toISOString(),
+correct,
+wrong,
+skip
+});
+
+localStorage.setItem(
+"rankforge_history",
+JSON.stringify(history.slice(-50))
+);
+
+show("result");
+updateDashboard();
+}
+
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,char=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[char]));
+}
+
+function updateDashboard(){
+const history=JSON.parse(localStorage.getItem("rankforge_history")||"[]");
+
+$("testCount").textContent=history.length;
+
+$("avgScore").textContent=history.length
+?Math.round(history.reduce((sum,item)=>
+sum+item.score/item.max*100,0)/history.length)+"%"
+:"—";
+
+$("recentResults").innerHTML=history.length
+?history.slice(-3).reverse().map(item=>
+`${escapeHTML(item.name)}: <b>${item.score}/${item.max}</b>`
+).join("<br>")
+:"No tests completed yet.";
+}
+
+function backHome(){
+clearInterval(timerId);
+show("home");
+updateDashboard();
+}
+
+validateBank();
+updateDashboard();
 </script>
+
 </body>
 </html>
